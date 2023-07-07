@@ -403,9 +403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c821f9456670d934fba463928ec1f4b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap1: {fileID: 236631589}
-  tiledata0: {fileID: 11400000, guid: d3d2c6ba8e74e864bb8960c255585b91, type: 2}
-  tiledata9: {fileID: 11400000, guid: 5b2a7f75807d0614b9d30bc0b72ac265, type: 2}
+  maze: {fileID: 236631589}
+  floorTile: {fileID: 11400000, guid: cd52263bc9c260f4ab2f4c13cde16f9d, type: 2}
+  wallTile: {fileID: 11400000, guid: 37fadd56166119440b15a3f50ca64083, type: 2}
+  finishTile: {fileID: 11400000, guid: 1ad174a6b189ec24b9fa4a465f91cc41, type: 2}
   i_max_x: 21
   i_max_y: 21
 --- !u!1 &1984237308
