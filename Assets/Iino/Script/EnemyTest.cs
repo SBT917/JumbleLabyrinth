@@ -24,26 +24,25 @@ public class EnemyTest : MonoBehaviour
     // 次に経路探索を行う時刻
     private float nextPathfindingTime = 0f;
 
+    private List<Vector2Int> pathToDraw;
 
-    public Tilemap map;  // これはUnityのInspectorから設定します
 
-    Vector2Int previousPlayerPosition;
-    float someThreshold = 1f;  // プレイヤーが1以上動いたら経路を再計算
+    public Tilemap map;
 
-    Coroutine followPathCoroutine; // 新たにコルーチンを追加
+    [SerializeField]
+    private int PathType;
+
+
+    Coroutine followPathCoroutine; // コルーチン追加
 
     void Update()
     {
-        Vector2Int currentPlayerPosition = Vector2Int.FloorToInt(player.transform.position);
-        if (Vector2Int.Distance(previousPlayerPosition, currentPlayerPosition) > someThreshold)
+        if (Time.time >= nextPathfindingTime)
         {
-            if (Time.time >= nextPathfindingTime)
-            {
-                Pathfinding();
-                nextPathfindingTime = Time.time + pathfindingInterval;
-            }
+
+            Pathfinding();
+            nextPathfindingTime = Time.time + pathfindingInterval;
         }
-        previousPlayerPosition = currentPlayerPosition;
     }
 
 
@@ -52,13 +51,14 @@ public class EnemyTest : MonoBehaviour
         // Tilemapから指定された位置のタイルを取得
         TileBase tile = map.GetTile((Vector3Int)position);
 
-        // タイルが存在しなければ移動可能（つまりtrueを返す）
-        // タイルが存在する場合は移動不可能（つまりfalseを返す）
+        // タイルが存在しなければ移動可能
+        // タイルが存在する場合は移動不可能
         return tile == null;
     }
 
     void Pathfinding()
     {
+        Debug.Log("パスファインディング開始");
         // ユークリッド距離を計算するHeuristic関数
         Func<Vector2Int, Vector2Int, float> HeuristicFunction = (node1, node2) =>
         {
@@ -81,7 +81,7 @@ public class EnemyTest : MonoBehaviour
             foreach (var direction in directions)
             {
                 var nextNode = node + direction;
-                if (IsWalkable(nextNode)) // IsWalkableはそのセルが移動可能かをチェックする関数
+                if (IsWalkable(nextNode))
                 {
                     result[nextNode] = 1; // 移動コストは一律1とする
                 }
@@ -93,18 +93,18 @@ public class EnemyTest : MonoBehaviour
         // パスファインダーのインスタンスを作成
         var pathfinder = new Pathfinder<Vector2Int>(HeuristicFunction, ConnectedNodesFunction);
 
-        // 敵キャラクターの位置とプレイヤーの位置をセル座標に変換します
-        // これは実際のゲームのシチュエーションによって変わる可能性があります
+        // 敵キャラクターの位置とプレイヤーの位置をセル座標に変換
         Vector2Int start = Vector2Int.FloorToInt(transform.position);
         Vector2Int goal = Vector2Int.FloorToInt(player.transform.position);
 
-        // 経路探索を実行します
+        // 経路探索を実行
         bool pathFound = pathfinder.GenerateAstarPath(start, goal, out List<Vector2Int> path);
 
-        // 経路が見つかった場合、敵キャラクターはその経路に沿って移動します
+        // 経路が見つかった場合、敵キャラクターはその経路に沿って移動
         if (pathFound)
         {
             Debug.Log("Path found!");
+            pathToDraw = path;
             // 前のコルーチンがあればそれを停止する
             if (followPathCoroutine != null)
             {
@@ -117,21 +117,36 @@ public class EnemyTest : MonoBehaviour
         // 経路に沿って移動するコルーチン
         IEnumerator FollowPath(List<Vector2Int> path)
         {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();  // Rigidbody2Dコンポーネントを取得します
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
             foreach (Vector2Int position in path)
             {
-                Vector2 targetPosition = (Vector2)position;
-                while (Vector2.Distance((Vector2)transform.position, targetPosition) > 0.05f)  // 0.05は許容するエラーの範囲です
-                {
-                    Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);  // 現在の位置から目標位置に向かって移動します
-                    transform.position = newPosition;  // Transformの位置を更新します
+                // Calculate a target position that is slightly inside the real target cell
+                Vector2 targetPosition = (Vector2)position + new Vector2(0.5f, 0.5f); // Adjust this buffer as needed
 
-                    yield return new WaitForFixedUpdate();  // FixedUpdate間隔で実行します（物理更新に合わせて）
+                while (Vector2.Distance((Vector2)transform.position, targetPosition) > 0.05f)
+                {
+                    Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                    transform.position = newPosition;
+                    yield return new WaitForFixedUpdate();
                 }
             }
         }
 
+    }
+
+   
+
+    void OnDrawGizmos()
+    {
+        if (pathToDraw == null || pathToDraw.Count == 0)
+            return;
+
+        Gizmos.color = Color.red;
+        foreach (Vector2Int pos in pathToDraw)
+        {
+            Gizmos.DrawSphere((Vector2)pos, 0.1f);
+        }
     }
 }
 
