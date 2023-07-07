@@ -256,10 +256,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1572210346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5211d3f6e3521294fac653a41b6c8e89, type: 3}
+  m_Script: {fileID: 11500000, guid: 76291069ab3c05b42b795bd5ff3b4806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  size: 10
-  wallPrefab: {fileID: 9151825061433902092, guid: b25abd88c8de1444a954006c5a9156fb, type: 3}
-  floorPrefab: {fileID: 2278952562853405660, guid: bc9beeacd6f9be343ac28d5a9d478faa, type: 3}
+  mazeRows: 10
+  mazeColumns: 10
+  cellPrefab: {fileID: 568893562305355864, guid: bc9beeacd6f9be343ac28d5a9d478faa, type: 3}
+  disableCellSprite: 1
