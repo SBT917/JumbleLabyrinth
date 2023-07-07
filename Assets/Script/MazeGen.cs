@@ -19,8 +19,8 @@ public class MazeGen : MonoBehaviour
     GameObject clickedGameObject;
 
     //迷路の最大数
-    int i_max_x;
-    int i_max_y;
+    [SerializeField]
+    int i_max_x, i_max_y;
 
     //作成した迷路の格納変数
     int[,] i_map;
@@ -29,15 +29,8 @@ public class MazeGen : MonoBehaviour
     void Start()
     {
 
-        //タイルマップのゲームオブジェクト取得
-        //tilemap1 = GameObject.Find("不可").GetComponent<Tilemap>();
-        //タイルマップのパターン取得
-       // tiledata0 = (TileBase)Resources.Load("pipo-map001_0");
-        //tiledata9 = (TileBase)Resources.Load("pipo-map001_13");
 
         //棒倒し方で迷路作成
-        i_max_x = 21;
-        i_max_y = 21;
 
         int i_temp;
 
