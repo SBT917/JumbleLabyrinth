@@ -10,6 +10,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyTest : MonoBehaviour
 {
+    Animator animator;
+
     [SerializeField]
     private GameObject player;
 
@@ -34,6 +36,11 @@ public class EnemyTest : MonoBehaviour
 
 
     Coroutine followPathCoroutine; // コルーチン追加
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -127,6 +134,12 @@ public class EnemyTest : MonoBehaviour
                 while (Vector2.Distance((Vector2)transform.position, targetPosition) > 0.05f)
                 {
                     Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                    Vector2 direction = newPosition - (Vector2)transform.position;
+                    direction.Normalize();
+
+                    animator.SetFloat("MoveX", direction.x);
+                    animator.SetFloat("MoveY", direction.y);
+
                     transform.position = newPosition;
                     yield return new WaitForFixedUpdate();
                 }
@@ -137,6 +150,7 @@ public class EnemyTest : MonoBehaviour
 
    
 
+    //経路をGizmoとして表示
     void OnDrawGizmos()
     {
         if (pathToDraw == null || pathToDraw.Count == 0)
