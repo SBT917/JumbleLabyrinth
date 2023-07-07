@@ -2,25 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-//タイルマップを操作する時に必要
 using UnityEngine.Tilemaps;
-//シーンの読み込み/再読み込み時に必要　SceneManager.LoadScene("SampleScene");
-using UnityEngine.SceneManagement;
 
 public class MazeGen : MonoBehaviour
 {
     //タイルマップ読み込み用
-    public Tilemap tilemap1;
-    public TileBase tiledata0;
-    public TileBase tiledata9;
-
-    //タッチしたゲームオブジェクトの格納用
-    GameObject clickedGameObject;
+    [SerializeField]
+    private Tilemap tilemap1;
+    [SerializeField]
+    private TileBase tiledata0, tiledata9;
 
     //迷路の最大数
     [SerializeField]
-    int i_max_x, i_max_y;
+    private int i_max_x, i_max_y;
 
     //作成した迷路の格納変数
     int[,] i_map;
@@ -99,42 +93,6 @@ public class MazeGen : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("start");
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        //タッチした、オブジェクト名を取得（ボックスコライダーが入っているオブジェクトのみ）
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            clickedGameObject = null;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit2d = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
-
-            if (hit2d)
-            {
-                clickedGameObject = hit2d.transform.gameObject;
-            }
-
-            //タッチしたオブジェクトがrestartだったら、シーンを再読み込み
-            if (clickedGameObject)
-            {
-                if (clickedGameObject.transform.name == "restart")
-                {
-                    //Application.LoadLevel("SampleScene");
-                   // SceneManager.LoadScene("SampleScene");
-                }
-            }
-            Debug.Log(clickedGameObject);
-
-        }
-
     }
 
 }
