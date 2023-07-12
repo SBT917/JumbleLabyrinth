@@ -5,14 +5,19 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour, IAttackable
 {
     [SerializeField] PlayerStatus status;
-    [SerializeField] Collider2D hitBox;
+    [SerializeField] GameObject attackObject;
+
+    Animator animator;
 
     float power; //çUåÇóÕ
+    float attackSpeed; //çUåÇë¨ìx
     bool isAttacking = false; //çUåÇÉÇÅ[ÉVÉáÉìíÜÇ©Ç«Ç§Ç©
 
     void Awake()
     {
+        TryGetComponent(out animator);
         power = status.defaultpower;
+        attackSpeed = status.defaultAttackSpeed;
     }
 
     public float GetPower()
@@ -36,11 +41,12 @@ public class PlayerAttack : MonoBehaviour, IAttackable
         isAttacking = true;
         Debug.Log("Attack");
 
-        hitBox.enabled = true;
-        yield return null;
-        hitBox.enabled = false;
+        Vector3 pos = transform.position + new Vector3(animator.GetFloat("DirectionX"), animator.GetFloat("DirectionY"), 0);
+        var o = Instantiate(attackObject, pos, Quaternion.identity, transform);
+        yield return new WaitForSeconds(0.2f);
+        Destroy(o);
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(attackSpeed);
         isAttacking = false;
     }
 }

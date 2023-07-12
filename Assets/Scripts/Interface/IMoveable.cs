@@ -4,6 +4,15 @@ using UnityEngine;
 
 public interface IMoveable
 {
+    enum Direction
+    {
+        Left,
+        Right,
+        Up,
+        Down
+    }
+
+
     /**  
     <summary>
     移動処理

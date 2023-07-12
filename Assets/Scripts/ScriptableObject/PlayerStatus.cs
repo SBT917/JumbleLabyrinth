@@ -6,5 +6,6 @@ using UnityEngine;
 public class PlayerStatus : ScriptableObject
 {
     public float defaultMoveSpeed; //デフォルトの移動速度
+    public float defaultAttackSpeed; //デフォルトの攻撃速度
     public float defaultpower; //デフォルトの攻撃力
 }

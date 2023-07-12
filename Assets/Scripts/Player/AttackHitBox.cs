@@ -8,7 +8,7 @@ public class AttackHitBox : MonoBehaviour
 
     void Awake()
     {
-        transform.parent.TryGetComponent(out attackable);    
+        transform.parent.TryGetComponent(out attackable);
     }
 
     void OnTriggerEnter2D(Collider2D other)

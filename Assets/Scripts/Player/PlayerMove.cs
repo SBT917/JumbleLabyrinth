@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour, IMoveable
 {
-
     [SerializeField] PlayerStatus status;
 
     Rigidbody2D rigid;
-
     float moveSpeed; //移動速度
-    Vector3 moveVec; //移動ベクトル
+    Vector3 moveVec; //移動ベクトル    
 
     void Awake()
     {
