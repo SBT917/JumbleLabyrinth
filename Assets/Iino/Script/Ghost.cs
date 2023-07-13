@@ -28,7 +28,6 @@ public class Ghost : Enemy
     protected override void Initialize()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // Implement random wandering code here.
     }
 
     void Update()
@@ -49,7 +48,6 @@ public class Ghost : Enemy
                 break;
         }
 
-        Debug.Log(currentState);
     }
 
     protected override void IdleBehavior()
@@ -58,6 +56,7 @@ public class Ghost : Enemy
     }
     protected override void WanderBehavior()
     {
+        Debug.Log(Vector2Int.FloorToInt(transform.position) + " : " + currentPatrolPoint);
         // Check if the enemy has reached its patrol point
         if (Vector2Int.FloorToInt(transform.position) == currentPatrolPoint || currentPatrolPoint == default(Vector2Int))
         {
@@ -77,7 +76,9 @@ public class Ghost : Enemy
             int randomIndex = UnityEngine.Random.Range(0, freeTiles.Count);
             Vector3Int randomPosition = freeTiles[randomIndex];
             Vector3 worldPosition = map.GetCellCenterWorld(randomPosition);
-            return new Vector2Int((int)worldPosition.x, (int)worldPosition.y);
+            Vector2Int patrolPoint = new Vector2Int((int)worldPosition.x, (int)worldPosition.y);
+            Debug.Log($"Generated patrol point: {patrolPoint}");
+            return patrolPoint;
         }
         else
         {
@@ -89,7 +90,7 @@ public class Ghost : Enemy
     protected override void ChasingBehavior()
     {
         //ターゲットがnullならWanderに戻る
-        if(target == null)
+        if (target == null)
         {
             currentState = State.Wander;
             return;
@@ -107,7 +108,7 @@ public class Ghost : Enemy
 
     protected override void AttackingBehavior()
     {
-        
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -116,7 +117,7 @@ public class Ghost : Enemy
         {
             currentState = State.Attacking;
             // Start coroutine to apply stun effect
-            
+
         }
     }
 
@@ -153,7 +154,6 @@ public class Ghost : Enemy
     #region Pathfinding
     void Pathfinding(Vector2Int goal)
     {
-        Debug.Log("パスファインディング開始");
         // ユークリッド距離を計算するHeuristic関数
         Func<Vector2Int, Vector2Int, float> HeuristicFunction = (node1, node2) =>
         {
@@ -196,11 +196,10 @@ public class Ghost : Enemy
         bool pathFound = pathfinder.GenerateAstarPath(start, goal, out List<Vector2Int> path);
 
 
-
         // 経路が見つかった場合、敵キャラクターはその経路に沿って移動
         if (pathFound)
         {
-            Debug.Log("Path found!");
+            Debug.Log($"Path found: {pathFound}, Path: {string.Join(", ", path)}");
             pathToDraw = path;
             // 前のコルーチンがあればそれを停止する
             if (followPathCoroutine != null)
@@ -210,10 +209,18 @@ public class Ghost : Enemy
             // 新しいコルーチンを開始する
             followPathCoroutine = StartCoroutine(FollowPath(path));
         }
+        else if(currentState == State.Wander)
+        {
+            Debug.Log("Path not found");
+            currentState = State.Wander;
+        }
+        {
+            Debug.Log("Path not found" );
+        }
 
-        // 経路に沿って移動するコルーチン
         IEnumerator FollowPath(List<Vector2Int> path)
         {
+            Debug.Log("FollowPath started");
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
             foreach (Vector2Int position in path)
@@ -227,6 +234,7 @@ public class Ghost : Enemy
                     Vector2 direction = newPosition - (Vector2)transform.position;
                     direction.Normalize();
 
+
                     animator.SetFloat("MoveX", direction.x);
                     animator.SetFloat("MoveY", direction.y);
 
@@ -234,10 +242,25 @@ public class Ghost : Enemy
                     yield return new WaitForFixedUpdate();
                 }
             }
+            Debug.Log("FollowPath finished");
         }
 
+        #endregion
+
+
+
     }
-    #endregion
+
+    void OnDrawGizmos()
+    {
+        // 現在のパトロールポイントが有効ならばギズモを描画する
+        if (currentPatrolPoint != Vector2Int.zero) // もし初期値以外なら描画する
+        {
+            // パトロールポイントを赤い球で表示
+            Gizmos.color = Color.red;
+            Vector3 gizmoPosition = new Vector3(currentPatrolPoint.x, currentPatrolPoint.y, 0f);
+            Gizmos.DrawSphere(gizmoPosition, 0.5f);
+        }
+    }
 
 }
-
