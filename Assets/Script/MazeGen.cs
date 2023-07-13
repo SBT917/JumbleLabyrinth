@@ -19,6 +19,9 @@ public class MazeGen : MonoBehaviour
     //ì¬‚µ‚½–À˜H‚ÌŠi”[•Ï”
     int[,] i_map;
 
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
