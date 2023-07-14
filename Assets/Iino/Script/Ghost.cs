@@ -2,120 +2,27 @@ using Aoiti.Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Ghost : Enemy
 {
-    public float trackingDistance = 10f;
-    public float stunDuration = 3f;
     private SpriteRenderer spriteRenderer;
 
-    // 経路探索の間隔（秒）
-    public float pathfindingInterval = 1f;
 
-    // 次に経路探索を行う時刻
-    private float nextPathfindingTime = 0f;
-
-    private List<Vector2Int> pathToDraw;
-
-    public Tilemap map;
-
-    Vector2Int currentPatrolPoint;
-
-    Coroutine followPathCoroutine;
 
     protected override void Initialize()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    void Update()
-    {
-        switch (currentState)
-        {
-            case State.Idle:
-                IdleBehavior();
-                break;
-            case State.Wander:
-                WanderBehavior();
-                break;
-            case State.Chasing:
-                ChasingBehavior();
-                break;
-            case State.Attacking:
-                AttackingBehavior();
-                break;
-        }
-
-    }
-
-    protected override void IdleBehavior()
-    {
-
-    }
-    protected override void WanderBehavior()
-    {
-        Debug.Log(Vector2Int.FloorToInt(transform.position) + " : " + currentPatrolPoint);
-        // Check if the enemy has reached its patrol point
-        if (Vector2Int.FloorToInt(transform.position) == currentPatrolPoint || currentPatrolPoint == default(Vector2Int))
-        {
-            // If the enemy has reached its patrol point, get a new one
-            currentPatrolPoint = GetRandomPatrolPoint();
-
-            // Start pathfinding to the new patrol point
-            Pathfinding(currentPatrolPoint);
-        }
-    }
-
-    private Vector2Int GetRandomPatrolPoint()
-    {
-        var freeTiles = GetFreeTile.instance.GetFreeTiles();
-        if (freeTiles.Count > 0)
-        {
-            int randomIndex = UnityEngine.Random.Range(0, freeTiles.Count);
-            Vector3Int randomPosition = freeTiles[randomIndex];
-            Vector3 worldPosition = map.GetCellCenterWorld(randomPosition);
-            Vector2Int patrolPoint = new Vector2Int((int)worldPosition.x, (int)worldPosition.y);
-            Debug.Log($"Generated patrol point: {patrolPoint}");
-            return patrolPoint;
-        }
-        else
-        {
-            return Vector2Int.zero; // Or any other 'error' value
-        }
-    }
-
-
-    protected override void ChasingBehavior()
-    {
-        //ターゲットがnullならWanderに戻る
-        if (target == null)
-        {
-            currentState = State.Wander;
-            return;
-        }
-
-        if (Time.time >= nextPathfindingTime)
-        {
-            Vector2Int goal = Vector2Int.FloorToInt(target.transform.position);
-            Pathfinding(goal);
-            nextPathfindingTime = Time.time + pathfindingInterval;
-        }
-    }
-
-
-
-    protected override void AttackingBehavior()
-    {
-
+        StartWander();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            currentState = State.Attacking;
+            
             // Start coroutine to apply stun effect
 
         }
@@ -123,144 +30,47 @@ public class Ghost : Enemy
 
     protected override void OnTargetEnter(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            target = collision.gameObject;
-            currentState = State.Chasing;
-        }
+        //if (collision.gameObject.CompareTag("Player"))
+        //{
+        //    target = collision.gameObject;
+        //    StartChasing();
+            
+        //}
     }
 
     protected override void OnTargetExit(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            target = null;
-            currentState = State.Wander;
-        }
+        //if (collision.gameObject.CompareTag("Player"))
+        //{
+        //    target = null;
+        //    StartIdle();
+        //}
     }
 
-
-
-    private bool IsWalkable(Vector2Int position)
+    protected override void StartChasing()
     {
-        // Tilemapから指定された位置のタイルを取得
-        TileBase tile = map.GetTile((Vector3Int)position);
-
-        // タイルが存在しなければ移動可能
-        // タイルが存在する場合は移動不可能
-        return tile == null;
+        ChangeState(new ChasingState(this, target, map, this.gameObject));
+        Debug.Log("Chasing");
     }
 
-    #region Pathfinding
-    void Pathfinding(Vector2Int goal)
+    protected override void StartWander()
     {
-        // ユークリッド距離を計算するHeuristic関数
-        Func<Vector2Int, Vector2Int, float> HeuristicFunction = (node1, node2) =>
-        {
-            return Vector2Int.Distance(node1, node2);
-        };
-
-        // 接続ノードを取得するConnectedNodes関数
-        Func<Vector2Int, Dictionary<Vector2Int, float>> ConnectedNodesFunction = (node) =>
-        {
-            var result = new Dictionary<Vector2Int, float>();
-
-            // 上下左右のセルを調べる
-            var directions = new Vector2Int[]
-            {
-        new Vector2Int(0, 1),
-        new Vector2Int(0, -1),
-        new Vector2Int(1, 0),
-        new Vector2Int(-1, 0)
-            };
-            foreach (var direction in directions)
-            {
-                var nextNode = node + direction;
-                if (IsWalkable(nextNode))
-                {
-                    result[nextNode] = 1; // 移動コストは一律1とする
-                }
-            }
-
-            return result;
-        };
-
-        // パスファインダーのインスタンスを作成
-        var pathfinder = new Pathfinder<Vector2Int>(HeuristicFunction, ConnectedNodesFunction);
-
-        // 敵キャラクターの位置とプレイヤーの位置をセル座標に変換
-        Vector2Int start = Vector2Int.FloorToInt(transform.position);
-        //Vector2Int goal = Vector2Int.FloorToInt(target.transform.position);
-
-        // 経路探索を実行
-        bool pathFound = pathfinder.GenerateAstarPath(start, goal, out List<Vector2Int> path);
-
-
-        // 経路が見つかった場合、敵キャラクターはその経路に沿って移動
-        if (pathFound)
-        {
-            Debug.Log($"Path found: {pathFound}, Path: {string.Join(", ", path)}");
-            pathToDraw = path;
-            // 前のコルーチンがあればそれを停止する
-            if (followPathCoroutine != null)
-            {
-                StopCoroutine(followPathCoroutine);
-            }
-            // 新しいコルーチンを開始する
-            followPathCoroutine = StartCoroutine(FollowPath(path));
-        }
-        else if(currentState == State.Wander)
-        {
-            Debug.Log("Path not found");
-            currentState = State.Wander;
-        }
-        {
-            Debug.Log("Path not found" );
-        }
-
-        IEnumerator FollowPath(List<Vector2Int> path)
-        {
-            Debug.Log("FollowPath started");
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-
-            foreach (Vector2Int position in path)
-            {
-                // Calculate a target position that is slightly inside the real target cell
-                Vector2 targetPosition = (Vector2)position + new Vector2(0.5f, 0.5f); // Adjust this buffer as needed
-
-                while (Vector2.Distance((Vector2)transform.position, targetPosition) > 0.05f)
-                {
-                    Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-                    Vector2 direction = newPosition - (Vector2)transform.position;
-                    direction.Normalize();
-
-
-                    animator.SetFloat("MoveX", direction.x);
-                    animator.SetFloat("MoveY", direction.y);
-
-                    transform.position = newPosition;
-                    yield return new WaitForFixedUpdate();
-                }
-            }
-            Debug.Log("FollowPath finished");
-        }
-
-        #endregion
-
-
-
+        ChangeState(new WanderState(gameObject,map));
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
-        // 現在のパトロールポイントが有効ならばギズモを描画する
-        if (currentPatrolPoint != Vector2Int.zero) // もし初期値以外なら描画する
+        if (currentState is ChasingState chasingState)
         {
-            // パトロールポイントを赤い球で表示
+            var path = chasingState.GetPathToDraw();
+            if (path == null || path.Count == 0)
+                return;
+
             Gizmos.color = Color.red;
-            Vector3 gizmoPosition = new Vector3(currentPatrolPoint.x, currentPatrolPoint.y, 0f);
-            Gizmos.DrawSphere(gizmoPosition, 0.5f);
+            foreach (Vector2Int pos in path)
+            {
+                Gizmos.DrawSphere((Vector2)pos + new Vector2(0.5f, 0.5f), 0.1f);
+            }
         }
     }
-
 }

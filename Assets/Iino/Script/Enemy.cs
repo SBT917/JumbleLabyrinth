@@ -18,6 +18,8 @@ public abstract class Enemy : MonoBehaviour
 
     protected Animator animator;
 
+    public Tilemap map;
+
     [SerializeField]
     private TriggerEvent triggerEvent;
 
@@ -27,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
         triggerEvent.onTriggerExit += OnTargetExit;
         animator = GetComponent<Animator>();
         health = maxHealth;
+
         Initialize();
     }
 
@@ -64,14 +67,14 @@ public abstract class Enemy : MonoBehaviour
         ChangeState(new IdleState());
     }
 
-    protected void StartWander()
+    protected virtual void StartWander()
     {
-        ChangeState(new WanderState());
+        //ChangeState(new WanderState());
     }
 
-    protected void StartChasing()
+    protected virtual void StartChasing()
     {
-        ChangeState(new ChasingState());
+        //ChangeState(new ChasingState());
     }
 
     protected void StartAttacking()
@@ -91,7 +94,5 @@ public abstract class Enemy : MonoBehaviour
 
 
 
-
-    
 }
 
