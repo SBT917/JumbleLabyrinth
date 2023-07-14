@@ -4,16 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 public class MazeGen : MonoBehaviour
 {
-    //ƒ^ƒCƒ‹ƒ}ƒbƒv“Ç‚İ‚İ—p
     [SerializeField]
     private Tilemap maze;
     [SerializeField]
     private TileBase floorTile, wallTile, finishTile;
-
-    
-    //–À˜H‚ÌÅ‘å”
     [SerializeField]
     private int i_max_x, i_max_y;
 
@@ -23,25 +20,22 @@ public class MazeGen : MonoBehaviour
     private const int Floor = 0, Wall = 9, Finish = -1;
 
 
-    private Vector2 finishLocation;
+    private Vector3Int finishLocation;
     void Start()
     {
-        finishLocation = new Vector2Int(Random.Range(3, i_max_x), Random.Range(3, i_max_y));
+        finishLocation = new Vector3Int(Random.Range(3, i_max_x), Random.Range(3, i_max_y),0);
         Debug.Log(finishLocation);
         GenerateMaze();
     }
     private void GenerateMaze()
     {
-        //–_“|‚µ•û‚Å–À˜Hì¬
 
         int i_temp;
 
         i_map = new int[i_max_x + 1, i_max_y + 1];
 
-        //ŠO•Ç‚ğ•Ç‚Å–„‚ß‚é
         FillOuterWalls();
 
-        //–_“|‚µ•û‚Å–À˜H‚ğì¬(­‚µè”²‚«)
         i_temp = 4;
         for (int y = 3; y <= i_max_y - 1; y += 2)
         {
@@ -100,7 +94,7 @@ public class MazeGen : MonoBehaviour
             {
                 if (i_map[x, y] == Floor)
                 {
-                    if (new Vector2Int(x, y) == finishLocation)
+                    if (new Vector3Int(x, y,0) == finishLocation)
                     {
                         maze.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), finishTile);
                     }
@@ -111,6 +105,10 @@ public class MazeGen : MonoBehaviour
                 }
                 else if (i_map[x,y]==Wall)
                 {
+                    if (finishLocation == new Vector3Int(x, y, 0))
+                    {
+                        continue;
+                    }
                     maze.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), wallTile);
                 }
             }
