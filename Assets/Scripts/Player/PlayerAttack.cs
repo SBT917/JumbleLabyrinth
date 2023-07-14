@@ -9,9 +9,9 @@ public class PlayerAttack : MonoBehaviour, IAttackable
 
     Animator animator;
 
-    float power; //UŒ‚—Í
-    float attackSpeed; //UŒ‚‘¬“x
-    bool isAttacking = false; //UŒ‚ƒ‚[ƒVƒ‡ƒ“’†‚©‚Ç‚¤‚©
+    float power; //ï¿½Uï¿½ï¿½ï¿½ï¿½
+    float attackSpeed; //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½x
+    bool isAttacking = false; //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 
     void Awake()
     {
@@ -41,7 +41,17 @@ public class PlayerAttack : MonoBehaviour, IAttackable
         isAttacking = true;
         Debug.Log("Attack");
 
-        Vector3 pos = transform.position + new Vector3(animator.GetFloat("DirectionX"), animator.GetFloat("DirectionY"), 0);
+        Vector3 dir = Vector3.zero;
+        if (animator.GetFloat("DirectionX") == 1) dir.x = 1;
+        else if (animator.GetFloat("DirectionX") == -1) dir.x = -1;
+        else dir.x = 0;
+
+        if(animator.GetFloat("DirectionY") == 1) dir.y = 1;
+        else if (animator.GetFloat("DirectionY") == -1) dir.y = -1;
+        else dir.y = Mathf.RoundToInt(animator.GetFloat("DirectionY")); ;
+
+        Vector3 pos = transform.position + dir;
+        Debug.Log(dir);
         var o = Instantiate(attackObject, pos, Quaternion.identity, transform);
         yield return new WaitForSeconds(0.2f);
         Destroy(o);
