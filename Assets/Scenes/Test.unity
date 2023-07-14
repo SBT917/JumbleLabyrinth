@@ -406,7 +406,8 @@ MonoBehaviour:
   maze: {fileID: 236631589}
   floorTile: {fileID: 11400000, guid: cd52263bc9c260f4ab2f4c13cde16f9d, type: 2}
   wallTile: {fileID: 11400000, guid: 37fadd56166119440b15a3f50ca64083, type: 2}
-  finishTile: {fileID: 11400000, guid: 3aef7536c06a4884895da0b0def864f6, type: 2}
+  finishTile: {fileID: 11400000, guid: 1ad174a6b189ec24b9fa4a465f91cc41, type: 2}
+  spawnTile: {fileID: 11400000, guid: 45e252f276021194ba33377f290624f7, type: 2}
   i_max_x: 21
   i_max_y: 21
 --- !u!1 &1984237308
