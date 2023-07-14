@@ -35,9 +35,13 @@ public abstract class Enemy : MonoBehaviour
 
     protected abstract void Initialize();
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Transform attacker,float knockbackSpeed = 5, float knockbackTime = 1)
     {
         health -= damage;
+        //ノックバックする方向を決定
+        Vector2 knockbackDirection = (transform.position - attacker.position).normalized;
+
+        ChangeState(new KnockbackState(gameObject, knockbackDirection, knockbackSpeed, knockbackTime));
         if (health <= 0)
         {
             TeleportAndResetHealth();
@@ -84,7 +88,12 @@ public abstract class Enemy : MonoBehaviour
 
     protected void StartAttacking()
     {
-        ChangeState(new AttackingState());
+        //ChangeState(new AttackingState());
+    }
+
+    protected virtual void StartKnokback()
+    {
+        //ChangeState(new KnockbackState());
     }
 
     protected abstract void OnTargetEnter(Collider2D collision);

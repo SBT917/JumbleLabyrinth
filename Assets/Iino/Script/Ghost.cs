@@ -30,21 +30,20 @@ public class Ghost : Enemy
 
     protected override void OnTargetEnter(Collider2D collision)
     {
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    target = collision.gameObject;
-        //    StartChasing();
-            
-        //}
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            target = collision.gameObject;
+            StartChasing();
+        }
     }
 
     protected override void OnTargetExit(Collider2D collision)
     {
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    target = null;
-        //    StartIdle();
-        //}
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            target = null;
+            StartMazeWalk();
+        }
     }
 
     protected override void StartChasing()
@@ -62,6 +61,8 @@ public class Ghost : Enemy
     {
         ChangeState(new MazeWalkState(gameObject, map));
     }
+
+
 
     private void OnDrawGizmos()
     {
