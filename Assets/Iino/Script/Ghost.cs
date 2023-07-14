@@ -15,7 +15,7 @@ public class Ghost : Enemy
     protected override void Initialize()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        StartWander();
+        StartMazeWalk();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -56,6 +56,11 @@ public class Ghost : Enemy
     protected override void StartWander()
     {
         ChangeState(new WanderState(gameObject,map));
+    }
+
+    protected override void StartMazeWalk()
+    {
+        ChangeState(new MazeWalkState(gameObject, map));
     }
 
     private void OnDrawGizmos()

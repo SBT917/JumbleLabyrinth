@@ -67,19 +67,14 @@ public class WanderState : IEnemyState
 
     public void UpdateState()
     {
-
-
         Vector2Int nextGridPos = Vector2Int.RoundToInt((Vector2)enemy.transform.position + currentDirection);
-
         Vector3 nextGridPosVec3 = new Vector3(nextGridPos.x, nextGridPos.y, 0);
 
         // Draw debug line
         Debug.DrawLine(enemy.transform.position, nextGridPosVec3, Color.red, 2f);
 
-
-        Debug.Log($"{nextGridPos}");
-        // If the next position is not walkable, choose a new direction
-        if (!IsWalkable(nextGridPos))
+        // If the next position is not walkable or is at the corner of a tile, choose a new direction
+        if (!IsWalkable(nextGridPos) || IsAtTileCorner(nextGridPos))
         {
             ChooseRandomDirection();
             return;
@@ -87,6 +82,17 @@ public class WanderState : IEnemyState
 
         enemy.transform.position = (Vector2)enemy.transform.position + currentDirection * enemy.GetComponent<Enemy>().speed * Time.deltaTime;
     }
+
+    bool IsAtTileCorner(Vector2Int position)
+    {
+        float buffer = 0.1f; // Adjust this buffer as needed
+        Vector2 currentPosition = (Vector2)enemy.transform.position;
+        Vector2Int currentGridPos = Vector2Int.RoundToInt(currentPosition);
+
+        // Check if the enemy is at the corner of a tile
+        return (Mathf.Abs(currentPosition.x - currentGridPos.x) <= buffer && Mathf.Abs(currentPosition.y - currentGridPos.y) <= buffer);
+    }
+
 
     void ChooseRandomDirection()
     {
@@ -303,4 +309,103 @@ public class AttackingState : IEnemyState
         throw new NotImplementedException();
     }
 }
+
+public class MazeWalkState : IEnemyState
+{
+    private GameObject enemy;
+    private Tilemap map;
+    private Vector2Int currentCell;
+    private Vector2Int lastCell;
+    private Vector2Int currentDirection;
+
+    public MazeWalkState(GameObject enemy, Tilemap map)
+    {
+        this.enemy = enemy;
+        this.map = map;
+    }
+
+    public void EnterState(Enemy enemy)
+    {
+        currentCell = GetCellPosition(enemy.transform.position);
+        lastCell = currentCell;
+        currentDirection = Vector2Int.down; // スタート地点から下方向へ移動開始
+    }
+
+    public void ExitState()
+    {
+    }
+
+    public void UpdateState()
+    {
+        // 現在のセル位置を更新
+        currentCell = GetCellPosition(enemy.transform.position);
+
+        // もし前回のセルと現在のセルが異なっていれば、移動方向を更新
+        if (currentCell != lastCell)
+        {
+            UpdateDirection();
+            lastCell = currentCell;
+        }
+
+        // 移動処理
+        Vector2 newPosition = (Vector2)enemy.transform.position + (Vector2)currentDirection * enemy.GetComponent<Enemy>().speed * Time.deltaTime;
+        enemy.transform.position = newPosition;
+    }
+
+    void UpdateDirection()
+    {
+        // 左手法に基づいて次の移動方向を決定
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            currentDirection,
+            RotateDirection(currentDirection, -90), // 左折
+            RotateDirection(currentDirection, 90),  // 右折
+            RotateDirection(currentDirection, 180)  // 後退
+        };
+
+        foreach (Vector2Int direction in directions)
+        {
+            Vector2Int nextCell = currentCell + direction;
+            if (IsWalkable(nextCell))
+            {
+                currentDirection = direction;
+                return;
+            }
+        }
+
+        // 全ての方向が壁だった場合は180度回転して後退
+        currentDirection = -currentDirection;
+    }
+
+    Vector2Int RotateDirection(Vector2Int direction, float angle)
+    {
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        Vector2 rotatedDirection = rotation * new Vector2(direction.x, direction.y);
+        return Vector2Int.RoundToInt(rotatedDirection);
+    }
+
+    bool IsWalkable(Vector2Int position)
+    {
+        // タイルマップから指定された位置のタイルを取得
+        TileBase tile = map.GetTile((Vector3Int)position);
+
+        // タイルが存在しなければ移動可能
+        // タイルが存在する場合は移動不可能
+        return tile == null;
+    }
+
+    Vector2Int GetCellPosition(Vector3 position)
+    {
+        return Vector2Int.RoundToInt(new Vector2(position.x, position.y));
+    }
+
+    public List<Vector2Int> GetPathToDraw()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+
+
 #endregion

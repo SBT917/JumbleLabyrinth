@@ -77,6 +77,11 @@ public abstract class Enemy : MonoBehaviour
         //ChangeState(new ChasingState());
     }
 
+    protected virtual void StartMazeWalk()
+    {
+
+    }
+
     protected void StartAttacking()
     {
         ChangeState(new AttackingState());
