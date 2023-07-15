@@ -9,9 +9,9 @@ public class PlayerAttack : MonoBehaviour, IAttackable
 
     Animator animator;
 
-    float power; //�U����
-    float attackSpeed; //�U�����x
-    bool isAttacking = false; //�U�����[�V���������ǂ���
+    float power; //攻撃力
+    float attackSpeed; //攻撃速度
+    bool isAttacking = false; //攻撃中かどうか
 
     void Awake()
     {
@@ -42,16 +42,21 @@ public class PlayerAttack : MonoBehaviour, IAttackable
         Debug.Log("Attack");
 
         Vector3 dir = Vector3.zero;
-        if (animator.GetFloat("DirectionX") == 1) dir.x = 1;
-        else if (animator.GetFloat("DirectionX") == -1) dir.x = -1;
-        else dir.x = 0;
 
-        if(animator.GetFloat("DirectionY") == 1) dir.y = 1;
-        else if (animator.GetFloat("DirectionY") == -1) dir.y = -1;
-        else dir.y = Mathf.RoundToInt(animator.GetFloat("DirectionY")); ;
+        //X方向の攻撃位置をセット
+        dir.x = Mathf.RoundToInt(animator.GetFloat("DirectionX"));
 
+        //Y方向の攻撃位置をセット
+        dir.y = Mathf.RoundToInt(animator.GetFloat("DirectionY"));
+
+        //斜め向きの場合はX方向の攻撃位置を0にする
+        if(dir.x != 0 && dir.y != 0)
+        {
+            dir.x = 0.0f;
+        }
+
+        //攻撃判定を出現させる
         Vector3 pos = transform.position + dir;
-        Debug.Log(dir);
         var o = Instantiate(attackObject, pos, Quaternion.identity, transform);
         yield return new WaitForSeconds(0.2f);
         Destroy(o);

@@ -5,14 +5,17 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     Animator animator;
-    IMoveable moveable;
     Vector3 direction;
+
+    IMoveable moveable;
+    IKnockBackable knockBackable;
 
     // Start is called before the first frame update
     void Awake()
     {
         TryGetComponent(out animator);
         TryGetComponent(out moveable);
+        TryGetComponent(out knockBackable);
     }
 
     // Update is called once per frame
@@ -29,6 +32,7 @@ public class PlayerAnimation : MonoBehaviour
         }
 
         //プレイヤーの向きを変更
+        if (knockBackable.IsKnockBack()) return;
         direction = moveable.GetDirection();
         animator.SetFloat("DirectionX", direction.x);
         animator.SetFloat("DirectionY", direction.y);

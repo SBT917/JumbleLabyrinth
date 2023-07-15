@@ -13,4 +13,23 @@ public class TestEnemy : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(!other.CompareTag("Player")) return;
+
+        
+
+        if (other.TryGetComponent(out IStanable stanable))
+        {
+            stanable.StartStan(1f);
+        }
+
+        if (other.TryGetComponent(out IKnockBackable knockBackable))
+        {
+            knockBackable.KnockBack(Vector3.right, 10f);
+        }
+
+
+    }
 }
