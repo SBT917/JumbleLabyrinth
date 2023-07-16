@@ -8,19 +8,27 @@ public class PlayerAnimation : MonoBehaviour
     Vector3 direction;
 
     IMoveable moveable;
-    IKnockBackable knockBackable;
+    IStanable stanable;
 
     // Start is called before the first frame update
     void Awake()
     {
         TryGetComponent(out animator);
         TryGetComponent(out moveable);
-        TryGetComponent(out knockBackable);
+        TryGetComponent(out stanable);
     }
 
     // Update is called once per frame
     void Update()
     {
+        MoveAnimation();
+        StanAnimation();
+    }
+
+    void MoveAnimation()
+    {
+        if (!moveable.Enable) return;
+
         if (moveable.Direction != Vector3.zero)
         {
             animator.SetBool("isMove", true);
@@ -32,9 +40,13 @@ public class PlayerAnimation : MonoBehaviour
         }
 
         //プレイヤーの向きを変更
-        if (knockBackable.IsKnockBack) return;
         direction = moveable.Direction;
         animator.SetFloat("DirectionX", direction.x);
         animator.SetFloat("DirectionY", direction.y);
+    }
+
+    void StanAnimation()
+    {
+        animator.SetBool("isStan", stanable.IsStan);
     }
 }

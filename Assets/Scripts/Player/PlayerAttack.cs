@@ -8,24 +8,30 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     [SerializeField] GameObject attackObject;
 
     Animator animator;
+    IMoveable moveable;
 
+    bool enable;
     float power; //攻撃力
     float attackSpeed; //攻撃速度
     bool isAttacking = false; //攻撃中かどうか
 
+    public bool Enable { get => enable; set => enable = value; }
     public float Power { get => power; }
     public bool IsAttack { get => isAttacking; }
 
     void Awake()
     {
         TryGetComponent(out animator);
+        enable = true;
         power = status.defaultpower;
         attackSpeed = status.defaultAttackSpeed;
     }
 
     public void Attack()
     {
+        if (!enable) return;
         if (isAttacking) return;
+
         StartCoroutine(AttackCroutine());
     }
 

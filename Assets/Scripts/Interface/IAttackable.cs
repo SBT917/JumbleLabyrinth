@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IAttackable
 {
+    bool Enable { get; set; }
     public void Attack();
     public float Power { get; }
     public bool IsAttack { get; }

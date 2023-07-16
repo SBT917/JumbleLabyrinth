@@ -4,6 +4,13 @@ using UnityEngine;
 
 public interface IMoveable
 {
+    /**
+    <summary>
+    移動が有効どうか
+    </summary>
+    */
+    bool Enable { get; set; }
+
     /**  
     <summary>
     移動処理

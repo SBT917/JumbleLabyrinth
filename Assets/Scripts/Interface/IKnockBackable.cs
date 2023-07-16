@@ -4,6 +4,9 @@ using UnityEngine;
 
 public interface IKnockBackable
 {
-    public void KnockBack(Vector3 direction, float force);
     public bool IsKnockBack { get; }
+    public void StartKnockBack(Vector3 direction, float force, float time);
+    public void UpdateKnockBack();
+    public void EndKnockBack();
+    
 }

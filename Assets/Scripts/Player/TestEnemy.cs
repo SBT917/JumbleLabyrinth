@@ -18,15 +18,15 @@ public class TestEnemy : MonoBehaviour, IDamageable
     {
         if(!other.CompareTag("Player")) return;
 
-        if (other.TryGetComponent(out IStanable stanable))
-        {
-            stanable.StartStan(1f);
-        }
-
         if (other.TryGetComponent(out IKnockBackable knockBackable))
         {
             Vector3 dir = other.transform.position - transform.position;
-            knockBackable.KnockBack(dir, 10f);
+            knockBackable.StartKnockBack(dir, 10f, 0.1f);
+        }
+
+        if (other.TryGetComponent(out IStanable stanable))
+        {
+            stanable.StartStan(1f);
         }
     }
 }
