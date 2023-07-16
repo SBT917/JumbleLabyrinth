@@ -13,21 +13,14 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     float attackSpeed; //攻撃速度
     bool isAttacking = false; //攻撃中かどうか
 
+    public float Power { get => power; }
+    public bool IsAttack { get => isAttacking; }
+
     void Awake()
     {
         TryGetComponent(out animator);
         power = status.defaultpower;
         attackSpeed = status.defaultAttackSpeed;
-    }
-
-    public float GetPower()
-    {
-        return power;
-    }
-
-    public void SetPower(float power)
-    {
-        this.power = power;
     }
 
     public void Attack()

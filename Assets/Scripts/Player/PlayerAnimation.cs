@@ -21,7 +21,7 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moveable.GetDirection() != Vector3.zero)
+        if (moveable.Direction != Vector3.zero)
         {
             animator.SetBool("isMove", true);
         }
@@ -32,8 +32,8 @@ public class PlayerAnimation : MonoBehaviour
         }
 
         //プレイヤーの向きを変更
-        if (knockBackable.IsKnockBack()) return;
-        direction = moveable.GetDirection();
+        if (knockBackable.IsKnockBack) return;
+        direction = moveable.Direction;
         animator.SetFloat("DirectionX", direction.x);
         animator.SetFloat("DirectionY", direction.y);
     }

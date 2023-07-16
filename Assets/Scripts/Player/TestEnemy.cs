@@ -18,8 +18,6 @@ public class TestEnemy : MonoBehaviour, IDamageable
     {
         if(!other.CompareTag("Player")) return;
 
-        
-
         if (other.TryGetComponent(out IStanable stanable))
         {
             stanable.StartStan(1f);
@@ -27,9 +25,8 @@ public class TestEnemy : MonoBehaviour, IDamageable
 
         if (other.TryGetComponent(out IKnockBackable knockBackable))
         {
-            knockBackable.KnockBack(Vector3.right, 10f);
+            Vector3 dir = other.transform.position - transform.position;
+            knockBackable.KnockBack(dir, 10f);
         }
-
-
     }
 }

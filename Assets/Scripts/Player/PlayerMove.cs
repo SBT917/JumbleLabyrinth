@@ -8,7 +8,19 @@ public class PlayerMove : MonoBehaviour, IMoveable
 
     Rigidbody2D rigid;
     float moveSpeed; //移動速度
-    Vector3 moveVec; //移動ベクトル    
+    Vector3 moveVec; //移動ベクトル
+
+    public float Speed 
+    { 
+        get => moveSpeed;
+        set => moveSpeed = value; 
+    } 
+
+    public Vector3 Direction 
+    { 
+        get => moveVec;
+        set => moveVec = value; 
+    } 
 
     void Awake()
     {
@@ -26,25 +38,5 @@ public class PlayerMove : MonoBehaviour, IMoveable
         Vector3 move = transform.position + direction * moveSpeed * Time.deltaTime;
         rigid.MovePosition(move);
     }
-
-    public void SetDirection(Vector3 direction)
-    {
-        moveVec = direction;
-    }
-
-    public Vector3 GetDirection()
-    {
-        return moveVec;
-    }
-    public void SetSpeed(float speed)
-    {
-        moveSpeed = speed;
-    }
-
-    public float GetSpeed()
-    {
-        return moveSpeed;
-    }
-
 }
 

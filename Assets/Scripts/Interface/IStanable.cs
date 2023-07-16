@@ -5,6 +5,5 @@ using UnityEngine;
 public interface IStanable
 {
     public void StartStan(float time);
-
-    bool IsStan();
+    public bool IsStan { get; }
 }

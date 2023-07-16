@@ -10,24 +10,20 @@ public class Player : MonoBehaviour, IStanable, IKnockBackable
     PlayerInput input;
     IMoveable moveable;
 
-
-    //スタン時処理
-    bool isStan = false;
     void Awake()
     {
         TryGetComponent(out input);
         TryGetComponent(out moveable);
     }
 
+
+    //スタン時処理
+    bool isStan = false;
+    public bool IsStan { get => isStan; }
     public void StartStan(float time)
     {
         isStan = true;
         StartCoroutine(StanCoroutine(time));
-    }
-
-    public bool IsStan()
-    {
-        return isStan;
     }
 
     IEnumerator StanCoroutine(float time)
@@ -40,29 +36,25 @@ public class Player : MonoBehaviour, IStanable, IKnockBackable
 
 
     //ノックバック時処理
-    bool isKnockBack = false;
+    bool isKnockBack;
+    public bool IsKnockBack { get => isKnockBack; }
     public void KnockBack(Vector3 direction, float force)
     {
         isKnockBack = true;
         StartCoroutine(KnockBackCoroutine(direction, force));
     }
 
-    public bool IsKnockBack()
-    {
-        return isKnockBack;
-    }
-
     IEnumerator KnockBackCoroutine(Vector3 direction , float force)
     {
-        float defaultSpeed = moveable.GetSpeed();
+        float defaultSpeed = moveable.Speed;
 
-        moveable.SetDirection(direction);
-        moveable.SetSpeed(force);
+        moveable.Direction = direction;
+        moveable.Speed = force;
 
         yield return new WaitForSeconds(0.1f);
 
-        moveable.SetDirection(Vector3.zero);
-        moveable.SetSpeed(defaultSpeed);
+        moveable.Direction = Vector3.zero;
+        moveable.Speed = defaultSpeed;
         isKnockBack = false;
 
     }
