@@ -29,7 +29,7 @@ public class KnockBack : MonoBehaviour, IKnockBackable
 
     public void UpdateKnockBack()
     {
-        transform.position += direction * force * Time.deltaTime;
+        transform.position += direction.normalized * force * Time.deltaTime;
         time -= Time.deltaTime;
         if (time <= 0)
         {

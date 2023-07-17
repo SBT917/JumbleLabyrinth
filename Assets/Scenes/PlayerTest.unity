@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 737644615}
   - component: {fileID: 737644614}
   - component: {fileID: 737644613}
+  - component: {fileID: 737644617}
   - component: {fileID: 737644616}
   m_Layer: 0
   m_Name: TestEnemy
@@ -266,6 +267,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &737644617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737644612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1801cdab00982ef498169af70cb6cb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1051347299
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,11 +515,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3883497268743098316, guid: 0f04918ce343aba47a3f3e810bfa2903, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.28
+      value: 2.53
       objectReference: {fileID: 0}
     - target: {fileID: 3883497268743098316, guid: 0f04918ce343aba47a3f3e810bfa2903, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.18
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3883497268743098316, guid: 0f04918ce343aba47a3f3e810bfa2903, type: 3}
       propertyPath: m_LocalPosition.z

@@ -15,3 +15,4 @@ MonoBehaviour:
   defaultMoveSpeed: 3
   defaultAttackSpeed: 0.5
   defaultpower: 1
+  defaultKnockForce: 20

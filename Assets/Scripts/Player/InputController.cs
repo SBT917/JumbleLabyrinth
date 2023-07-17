@@ -33,6 +33,8 @@ public class InputController : MonoBehaviour
     //移動キーを押したときの処理
     void OnMove(InputAction.CallbackContext context)
     {
+        if (move == null) return;
+
         Vector3 value = context.ReadValue<Vector2>();
         move.Direction = value;
     }
@@ -40,12 +42,16 @@ public class InputController : MonoBehaviour
     //移動キーを離したときの処理
     void OnMoveStop(InputAction.CallbackContext context)
     {
+        if (move== null) return;
+
         move.Direction = Vector3.zero;
     }
 
     //攻撃キーを押したときの処理
     void OnAttack(InputAction.CallbackContext context)
     {
+        if (attack == null) return;
+
         attack.Attack();
     }
 

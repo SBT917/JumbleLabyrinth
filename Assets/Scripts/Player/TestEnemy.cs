@@ -6,12 +6,12 @@ public class TestEnemy : MonoBehaviour, IDamageable
 {
     public void TakeDamage(float power)
     {
-        Death();
+        
     }
 
     public void Death()
     {
-        Destroy(gameObject);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)

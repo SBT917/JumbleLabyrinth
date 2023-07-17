@@ -29,8 +29,8 @@ public class Stan : MonoBehaviour, IStanable
     {
         isStan = true;
         count = time;
-        moveable.Enable = false;
-        attackable.Enable = false;
+        if (moveable != null) moveable.Enable = false;
+        if (attackable != null) attackable.Enable = false;
     }
 
     public void UpdateStan()
@@ -45,7 +45,7 @@ public class Stan : MonoBehaviour, IStanable
     public void EndStan()
     {
         isStan = false;
-        moveable.Enable = true;
-        attackable.Enable = true;
+        if(moveable != null) moveable.Enable = true; 
+        if(attackable != null) attackable.Enable = true;
     }
 }

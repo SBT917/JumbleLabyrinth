@@ -27,6 +27,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void MoveAnimation()
     {
+        if (moveable == null) return;
         if (!moveable.Enable) return;
 
         if (moveable.Direction != Vector3.zero)
@@ -47,6 +48,8 @@ public class PlayerAnimation : MonoBehaviour
 
     void StanAnimation()
     {
+        if(stanable == null) return;
+
         animator.SetBool("isStan", stanable.IsStan);
     }
 }

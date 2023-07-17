@@ -8,15 +8,16 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     [SerializeField] GameObject attackObject;
 
     Animator animator;
-    IMoveable moveable;
 
     bool enable;
     float power; //攻撃力
+    float knockForce; //ノックバック力
     float attackSpeed; //攻撃速度
     bool isAttacking = false; //攻撃中かどうか
 
     public bool Enable { get => enable; set => enable = value; }
     public float Power { get => power; }
+    public float KnockForce { get => knockForce; }
     public bool IsAttack { get => isAttacking; }
 
     void Awake()
@@ -24,6 +25,7 @@ public class PlayerAttack : MonoBehaviour, IAttackable
         TryGetComponent(out animator);
         enable = true;
         power = status.defaultpower;
+        knockForce = status.defaultKnockForce;
         attackSpeed = status.defaultAttackSpeed;
     }
 
