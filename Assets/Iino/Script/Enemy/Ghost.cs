@@ -8,6 +8,9 @@ using UnityEngine.Tilemaps;
 
 public class Ghost : Enemy
 {
+    [SerializeField]
+    private float attackDuration;
+
     protected override void Initialize()
     {
         StartMazeWalk();
@@ -17,9 +20,8 @@ public class Ghost : Enemy
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartAttacking();
+            //StartAttacking();
             
-
         }
     }
 
@@ -59,7 +61,7 @@ public class Ghost : Enemy
 
     protected override void StartAttacking()
     {
-        ChangeState(new MeleeAttackingState(gameObject, currentState, 5.0f));
+        ChangeState(new MeleeAttackingState(gameObject, currentState, attackDuration));
     }
 
 }

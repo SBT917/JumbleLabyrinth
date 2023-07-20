@@ -8,12 +8,16 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Animator))]
 public abstract class Enemy : MonoBehaviour
 {
-
+    [NonSerialized]
     public float health;
+
+    
     public float maxHealth = 100f;
+
     public float speed = 5f;
 
     public int playerMaze;
+
     protected GameObject target;
 
     protected Animator animator;
@@ -41,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
         //ノックバックする方向を決定
         Vector2 knockbackDirection = (transform.position - attacker.position).normalized;
 
-        ChangeState(new KnockbackState(gameObject, knockbackDirection, knockbackSpeed, knockbackTime));
+        ChangeState(new KnockbackState(gameObject,currentState, knockbackDirection, knockbackSpeed, knockbackTime));
         if (health <= 0)
         {
             TeleportAndResetHealth();

@@ -528,19 +528,22 @@ public class KnockbackState : IEnemyState
     private Vector3 direction;
     private float speed;
     private float knockbackTime;
-    private float timer;
+    protected IEnemyState previousState;
 
-    public KnockbackState(GameObject enemy, Vector3 direction, float speed, float knockbackTime)
+    public KnockbackState(GameObject enemy,IEnemyState enemyState, Vector3 direction, float speed, float knockbackTime)
     {
         this.enemy = enemy;
         this.direction = direction;
         this.speed = speed;
         this.knockbackTime = knockbackTime;
+        previousState = enemyState;
+
+        AfterEffect();
     }
 
     public void EnterState()
     {
-        timer = 0;
+
     }
 
     public void UpdateState()
@@ -548,14 +551,7 @@ public class KnockbackState : IEnemyState
         // Move enemy in the knockback direction
         enemy.transform.position += direction * speed * Time.deltaTime;
 
-        // Increment timer
-        timer += Time.deltaTime;
 
-        // Check if knockback time has ended
-        if (timer >= knockbackTime)
-        {
-            enemy.GetComponent<Enemy>().ChangeState(new IdleState());
-        }
     }
 
     public void ExitState()
@@ -568,12 +564,19 @@ public class KnockbackState : IEnemyState
         
     }
 
-    public List<Vector2Int> GetPathToDraw()
+    public void AfterEffect()
     {
-        throw new NotImplementedException();
+        enemy.GetComponent<Enemy>().StartCoroutine(ReturnToPreviousState());
     }
 
-    // Other methods...
+    private IEnumerator ReturnToPreviousState()
+    {
+        // Wait for the attack animation to finish
+        yield return new WaitForSeconds(knockbackTime);
+
+        // After attack animation, return to the previous state
+        enemy.GetComponent<Enemy>().ChangeState(previousState);
+    }
 }
 
 
