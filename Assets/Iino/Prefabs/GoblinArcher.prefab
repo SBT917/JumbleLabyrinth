@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3667460244607699854}
   - component: {fileID: 611415569131257981}
   m_Layer: 3
-  m_Name: Enemy
+  m_Name: GoblinArcher
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ Transform:
   m_Children:
   - {fileID: 5738135219335489461}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5220467374586528403
 SpriteRenderer:
@@ -158,8 +158,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 1293453797, guid: a2452e25832d78d409dc96883aa76717, type: 3}
-  m_Color: {r: 1, g: 0.019000754, b: 0, a: 1}
+  m_Sprite: {fileID: -661166653, guid: 4648f96dec5259a449dbd9a29bb9a308, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -241,7 +241,7 @@ Animator:
   m_GameObject: {fileID: 7063069362509772957}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b62d1d780d89c6248879efe986a173a5, type: 2}
+  m_Controller: {fileID: 9100000, guid: c5375b2eb91148f4a9869b857df7013b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  speed: 2
+  speed: 4
   playerMaze: 0
   map: {fileID: 0}
   triggerEvent: {fileID: 1837985834371787015}

@@ -86,7 +86,7 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
-    protected void StartAttacking()
+    protected virtual void StartAttacking()
     {
         //ChangeState(new AttackingState());
     }
@@ -102,11 +102,14 @@ public abstract class Enemy : MonoBehaviour
     {
         //敵のランダムな迷路にテレポート
 
-
         health = maxHealth;
     }
 
-
+    private void SetAnimatorParameters(Vector2 direction)
+    {
+        animator.SetFloat("moveX", direction.x);
+        animator.SetFloat("moveY", direction.y);
+    }
 
 }
 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a2452e25832d78d409dc96883aa76717
+guid: 85d92c3be201f904c96f30ca99077175
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,23 +103,11 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy01_0
+      name: BlackGhost_0
       rect:
         serializedVersion: 2
         x: 0
@@ -133,14 +121,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cafe0fb720213e4f8d909dc249495a9
-      internalID: 1293453797
+      spriteID: 604c4b39d3db71c4c87796ad7d718114
+      internalID: 1752007496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_1
+      name: BlackGhost_1
       rect:
         serializedVersion: 2
         x: 32
@@ -154,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca5fdd2cbe9267c4281228f7adafa941
-      internalID: -337181425
+      spriteID: cbf4cd944e007754ca704b381a8dfcb4
+      internalID: -265023179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_2
+      name: BlackGhost_2
       rect:
         serializedVersion: 2
         x: 64
@@ -175,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a98e3bfe4f129045a9a9cc32294960b
-      internalID: -2079465294
+      spriteID: 3fa955c3d6c56734d878ad0c31dc609e
+      internalID: 1388494176
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_3
+      name: BlackGhost_3
       rect:
         serializedVersion: 2
         x: 0
@@ -196,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0df818a9001b8545a144457f807113f
-      internalID: 1697605172
+      spriteID: d2903d8c7db98be4ca65f458e7147597
+      internalID: 1032104796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_4
+      name: BlackGhost_4
       rect:
         serializedVersion: 2
         x: 32
@@ -217,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5611ebe8f2772c4096909f15ce1d9fa
-      internalID: -231025009
+      spriteID: 41561c856e015044a9bed60de701667d
+      internalID: 1716849694
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_5
+      name: BlackGhost_5
       rect:
         serializedVersion: 2
         x: 64
@@ -238,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04b2ffd0c005f9b4491b965a5d5f8f66
-      internalID: -388685699
+      spriteID: e84e762bd05688641bf3c57833af5996
+      internalID: -591098811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_6
+      name: BlackGhost_6
       rect:
         serializedVersion: 2
         x: 0
@@ -259,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3696e25dae46c134eade391ce392b529
-      internalID: -248170043
+      spriteID: 813422ee8b72fe44b963dbba98fc848c
+      internalID: -888283306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_7
+      name: BlackGhost_7
       rect:
         serializedVersion: 2
         x: 32
@@ -280,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d1e172ca92b9a545aa835843ceeb5f2
-      internalID: -530858715
+      spriteID: a5f9df7c6b53fd049a033445025ba901
+      internalID: -884987143
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_8
+      name: BlackGhost_8
       rect:
         serializedVersion: 2
         x: 64
@@ -301,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bae6498d4514e474f8a98cbd70849a2c
-      internalID: 855775351
+      spriteID: 6f45c560f20bb8e4b972996858263add
+      internalID: 1114038475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_9
+      name: BlackGhost_9
       rect:
         serializedVersion: 2
         x: 0
@@ -322,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2d137016eeb04640b9a487e5b490464
-      internalID: -2114160382
+      spriteID: fbb9a5e01ad449146a7c959529530f8d
+      internalID: 1444771534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_10
+      name: BlackGhost_10
       rect:
         serializedVersion: 2
         x: 32
@@ -343,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf124174237055f4d9d93b76ce1d571a
-      internalID: -1883177133
+      spriteID: e0c44ea45de90ef4fbe3db58949d8a67
+      internalID: 654125457
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy01_11
+      name: BlackGhost_11
       rect:
         serializedVersion: 2
         x: 64
@@ -364,8 +352,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b9fc1eddce154441ae02cee4ff1171a
-      internalID: 1087943529
+      spriteID: fb06405fdb5a8814fab1b993019770bd
+      internalID: -1473615275
       vertices: []
       indices: 
       edges: []
@@ -381,18 +369,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Enemy01_0: 1293453797
-      Enemy01_1: -337181425
-      Enemy01_10: -1883177133
-      Enemy01_11: 1087943529
-      Enemy01_2: -2079465294
-      Enemy01_3: 1697605172
-      Enemy01_4: -231025009
-      Enemy01_5: -388685699
-      Enemy01_6: -248170043
-      Enemy01_7: -530858715
-      Enemy01_8: 855775351
-      Enemy01_9: -2114160382
+      BlackGhost_0: 1752007496
+      BlackGhost_1: -265023179
+      BlackGhost_10: 654125457
+      BlackGhost_11: -1473615275
+      BlackGhost_2: 1388494176
+      BlackGhost_3: 1032104796
+      BlackGhost_4: 1716849694
+      BlackGhost_5: -591098811
+      BlackGhost_6: -888283306
+      BlackGhost_7: -884987143
+      BlackGhost_8: 1114038475
+      BlackGhost_9: 1444771534
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,27 +6,19 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Ghost : Enemy
+public class GoblinArcher : Enemy
 {
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] 
+    private GameObject arrowPrefab;
 
 
+    private RangedEnemyChasingState chasingState;
 
     protected override void Initialize()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         StartMazeWalk();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            
-            // Start coroutine to apply stun effect
-
-        }
-    }
 
     protected override void OnTargetEnter(Collider2D collision)
     {
@@ -48,13 +40,15 @@ public class Ghost : Enemy
 
     protected override void StartChasing()
     {
-        ChangeState(new ChasingState(this, target, map, this.gameObject));
-        Debug.Log("Chasing");
+        //ChasingStateを割り当て、デリゲートにStartAttackingを割り当てる
+        chasingState = new RangedEnemyChasingState(this, target, map, this.gameObject);
+        chasingState.OnRaycastHit += StartAttacking;
+        ChangeState(chasingState);
     }
 
     protected override void StartWander()
     {
-        ChangeState(new WanderState(gameObject,map));
+        ChangeState(new WanderState(gameObject, map));
     }
 
     protected override void StartMazeWalk()
@@ -62,21 +56,9 @@ public class Ghost : Enemy
         ChangeState(new MazeWalkState(gameObject, map));
     }
 
-
-
-    private void OnDrawGizmos()
+    protected override void StartAttacking()
     {
-        if (currentState is ChasingState chasingState)
-        {
-            var path = chasingState.GetPathToDraw();
-            if (path == null || path.Count == 0)
-                return;
-
-            Gizmos.color = Color.red;
-            foreach (Vector2Int pos in path)
-            {
-                Gizmos.DrawSphere((Vector2)pos + new Vector2(0.5f, 0.5f), 0.1f);
-            }
-        }
+        ChangeState(new RangedAttackingState(gameObject, currentState, 1.0f, arrowPrefab, chasingState.direction));
     }
+
 }

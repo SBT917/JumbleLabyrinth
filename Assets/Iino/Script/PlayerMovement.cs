@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
 
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(10, transform);
+            //collision.gameObject.GetComponent<Enemy>().TakeDamage(10, transform);
         }
     }
 }

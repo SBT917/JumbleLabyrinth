@@ -13,8 +13,10 @@ public interface IEnemyState
     void UpdateState();
     void ExitState();
 
-    List<Vector2Int> GetPathToDraw();
 }
+
+
+
 #region Enemy States
 public class IdleState : IEnemyState
 {
@@ -134,17 +136,17 @@ public class ChasingState : IEnemyState
     public float pathfindingInterval = 1f;
 
     // 次に経路探索を行う時刻
-    private float nextPathfindingTime = 0f;
+    protected float nextPathfindingTime = 0f;
 
-    private MonoBehaviour monoBehaviour;
+    protected MonoBehaviour monoBehaviour;
 
     Coroutine followPathCoroutine;
 
-    private Tilemap map;
+    protected Tilemap map;
 
-    private GameObject target;
+    protected GameObject target;
 
-    private GameObject enemy;
+    protected GameObject enemy;
 
     public List<Vector2Int> pathToDraw = null;
 
@@ -169,7 +171,7 @@ public class ChasingState : IEnemyState
         }
     }
 
-    public void UpdateState()
+    public virtual void UpdateState()
     {
         if (Time.time >= nextPathfindingTime)
         {
@@ -177,6 +179,8 @@ public class ChasingState : IEnemyState
             Pathfinding(goal);
             nextPathfindingTime = Time.time + pathfindingInterval;
         }
+
+
     }
 
 
@@ -253,6 +257,8 @@ public class ChasingState : IEnemyState
         {
 
             Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+            Animator animator = enemy.GetComponent<Animator>();
+
             if (path == null)
             {
                 yield return new WaitForFixedUpdate();
@@ -267,6 +273,9 @@ public class ChasingState : IEnemyState
                     Vector2 newPosition = Vector2.MoveTowards(enemy.transform.position, targetPosition, enemy.GetComponent<Enemy>().speed * Time.deltaTime);
                     Vector2 direction = newPosition - (Vector2)enemy.transform.position;
 
+                    animator.SetFloat("MoveX", direction.x);
+                    animator.SetFloat("MoveY", direction.y);
+
                     enemy.transform.position = newPosition;
                     yield return new WaitForFixedUpdate();
                 }
@@ -280,28 +289,157 @@ public class ChasingState : IEnemyState
     }
 }
 
-public class AttackingState : IEnemyState
+public class RangedEnemyChasingState : ChasingState
 {
-    //...state specific methods
-    public void EnterState(Enemy enemy)
+    public delegate void RaycastHitDelegate();
+    public RaycastHitDelegate OnRaycastHit;
+
+    Vector2 lastPosition;
+    public Vector2 direction;
+
+    public RangedEnemyChasingState(MonoBehaviour monoBehaviour, GameObject target, Tilemap map, GameObject enemy) : base(monoBehaviour, target, map, enemy)
     {
-        throw new System.NotImplementedException();
+        this.monoBehaviour = monoBehaviour;
+        this.target = target;
+        this.map = map;
+        this.enemy = enemy;
     }
 
-    public void ExitState()
+    public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        base.UpdateState();
+
+        Animator animator = enemy.GetComponent<Animator>();
+        // 敵が向いている方向を取得
+        Vector2 direction = ((Vector2)enemy.transform.position - lastPosition).normalized;
+
+        // レイヤーマスクでEnemyレイヤーを除外する
+        int layerMask = ~LayerMask.GetMask("Enemy");
+
+        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, Mathf.Infinity, layerMask);
+
+        // レイを視覚的に表示する（色は赤、表示時間は1秒）
+        Debug.DrawRay(enemy.transform.position, direction * 10, Color.red, 1.0f);
+
+        // レイが何かに接触した場合
+        if (hit.collider != null)
+        {
+            Debug.Log(hit.collider.gameObject.name);
+            // レイがプレイヤーに接触した場合
+            if (hit.collider.gameObject == target)
+            {
+                // デリゲートがnullでなければ、それを呼び出す
+                OnRaycastHit?.Invoke();
+            }
+        }
+
+        // 現在の位置を保存
+        lastPosition = enemy.transform.position;
+    }
+}
+public abstract class AttackingState : IEnemyState
+{
+    protected GameObject enemy;
+    protected IEnemyState previousState;
+    protected float attackDuration;  // Example duration for attack animation
+
+    public AttackingState(GameObject enemy, IEnemyState previousState,float attackDuration)
+    {
+        this.enemy = enemy;
+        this.previousState = previousState;
+        this.attackDuration = attackDuration;
+
+
+        // Start returning to previous state after attack
+        AfterEffect();
     }
 
-    public void UpdateState()
+    public virtual void EnterState(Enemy enemy)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public List<Vector2Int> GetPathToDraw()
+    public virtual void ExitState()
     {
-        throw new NotImplementedException();
+
     }
+
+    public  virtual void UpdateState()
+    {
+
+    }
+
+    public void AfterEffect()
+    {
+        enemy.GetComponent<Enemy>().StartCoroutine(ReturnToPreviousState());
+    }
+
+    private IEnumerator ReturnToPreviousState()
+    {
+        // Wait for the attack animation to finish
+        yield return new WaitForSeconds(attackDuration);
+
+        // After attack animation, return to the previous state
+        enemy.GetComponent<Enemy>().ChangeState(previousState);
+    }
+}
+
+public class MeleeAttackingState : AttackingState
+{
+
+    public MeleeAttackingState(GameObject enemy, IEnemyState previousState, float attackDuration) : base(enemy, previousState, attackDuration)
+    {
+        this.enemy = enemy;
+        this.previousState = previousState;
+        this.attackDuration = attackDuration;
+
+        AfterEffect();
+    }
+
+}
+
+public class RangedAttackingState : AttackingState
+{
+    GameObject projectilePrefab;
+    UnityEngine.Transform target;
+    public Vector2 direction;
+
+    public RangedAttackingState(GameObject enemy, IEnemyState previousState, float attackDuration, GameObject projectilePrefab, Vector2 direction)
+                : base(enemy, previousState, attackDuration)
+    {
+        this.enemy = enemy;
+        this.previousState = previousState;
+        this.attackDuration = attackDuration;
+        this.projectilePrefab = projectilePrefab;
+        this.direction = direction;
+
+        AfterEffect();
+    }
+
+    public override void EnterState(Enemy enemy)
+    {
+        base.EnterState(enemy);
+        float offsetDistance = 1.0f;
+
+        // Compute the spawn position for the projectile.
+        Vector3 spawnPosition = enemy.transform.position + enemy.transform.forward * offsetDistance;
+
+        // Get the direction from animator.
+        Animator animator = enemy.GetComponent<Animator>();
+        Vector2 direction = new Vector2(animator.GetFloat("MoveX"), animator.GetFloat("MoveY"));
+
+        // Instantiate the projectile at the computed position, and orient it towards the direction.
+        GameObject projectile = UnityEngine.Object.Instantiate(projectilePrefab, spawnPosition, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
+
+        // Set the direction of the projectile.
+        EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
+        if (projectileScript != null)
+        {
+            Debug.Log(direction);
+            projectileScript.SetDirection(direction);
+        }
+    }
+
 }
 
 public class MazeWalkState : IEnemyState
@@ -310,13 +448,14 @@ public class MazeWalkState : IEnemyState
     private Tilemap map;
     private Vector2Int currentDirection;
     private Vector3 targetPosition;
+    private Animator animator;
 
     public MazeWalkState(GameObject enemy, Tilemap map)
     {
         this.enemy = enemy;
         this.map = map;
         targetPosition = enemy.transform.position;
-
+        animator = enemy.GetComponent<Animator>();
         // Choose a random initial direction
         List<Vector2Int> directions = new List<Vector2Int> { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
         currentDirection = directions[UnityEngine.Random.Range(0, directions.Count)];
@@ -359,6 +498,9 @@ public class MazeWalkState : IEnemyState
         }
 
         enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, targetPosition, enemy.GetComponent<Enemy>().speed * Time.deltaTime);
+        animator.SetFloat("MoveX", currentDirection.x);
+        animator.SetFloat("MoveY", currentDirection.y);
+
     }
 
     private Vector2Int TurnLeft(Vector2Int direction)
