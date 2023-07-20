@@ -6,7 +6,7 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GoblinArcher : Enemy
+public class RangedEnemy : Enemy
 {
     [SerializeField] 
     private GameObject arrowPrefab;

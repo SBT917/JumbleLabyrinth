@@ -10,6 +10,9 @@ public class EnemyProjectile : MonoBehaviour
     public float speed = 10f;
 
     private Vector2 direction;
+
+    [SerializeField]
+    private GameObject explosion;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +26,12 @@ public class EnemyProjectile : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             //TODO:プレイヤーをスタンさせる
+        }
 
+        if (explosion != null)
+        {
+            //爆発を生成する
+            GameObject Explosion = Instantiate(explosion, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
     }

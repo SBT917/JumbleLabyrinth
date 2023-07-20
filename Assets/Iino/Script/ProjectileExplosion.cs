@@ -20,6 +20,7 @@ public class ProjectileExplosion : MonoBehaviour
         }
     }
 
+    //アニメーションの再生後に呼び出される
     public void DestroyExplosion()
     {
         Destroy(gameObject);

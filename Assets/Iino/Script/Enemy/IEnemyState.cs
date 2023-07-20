@@ -23,7 +23,7 @@ public class IdleState : IEnemyState
     //...state specific methods
     public void EnterState(Enemy enemy)
     {
-        Debug.Log("Idle");
+
     }
 
     public void ExitState()
@@ -324,7 +324,6 @@ public class RangedEnemyChasingState : ChasingState
         // レイが何かに接触した場合
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject.name);
             // レイがプレイヤーに接触した場合
             if (hit.collider.gameObject == target)
             {
@@ -435,7 +434,6 @@ public class RangedAttackingState : AttackingState
         EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
         if (projectileScript != null)
         {
-            Debug.Log(direction);
             projectileScript.SetDirection(direction);
         }
     }
