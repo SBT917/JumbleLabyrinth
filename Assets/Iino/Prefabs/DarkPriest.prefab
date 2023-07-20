@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3667460244607699854}
   - component: {fileID: 2400472053879226075}
   m_Layer: 3
-  m_Name: GoblinArcher
+  m_Name: DarkPriest
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ Transform:
   m_Children:
   - {fileID: 5738135219335489461}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5220467374586528403
 SpriteRenderer:
@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -205767579, guid: 4648f96dec5259a449dbd9a29bb9a308, type: 3}
+  m_Sprite: {fileID: 988456852, guid: cfc794eae77643b449ec645d33934f7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -241,7 +241,7 @@ Animator:
   m_GameObject: {fileID: 7063069362509772957}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c5375b2eb91148f4a9869b857df7013b, type: 2}
+  m_Controller: {fileID: 9100000, guid: bc385f63fd575534ba1ad90624f55c8e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -264,10 +264,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcca85d64e009ca48bcb79eef7077c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 20
   maxHealth: 100
   speed: 2
   playerMaze: 0
   map: {fileID: 0}
   triggerEvent: {fileID: 1837985834371787015}
-  arrowPrefab: {fileID: 5374369984345472566, guid: 20019ad01dbe19c458899f6c284c7500, type: 3}
+  arrowPrefab: {fileID: 5374369984345472566, guid: 21f46dd17ced4f544a31b60a22d64f91, type: 3}
