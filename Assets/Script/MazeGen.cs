@@ -7,7 +7,7 @@ public class MazeGen : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("迷宮を入れて")]
-    private Tilemap maze;
+    private Tilemap maze, walls;
     [SerializeField]
     [Tooltip("タイルパレットからタイルを入れて")]
     private TileBase floorTile, wallTile, finishTile, spawnTile;
@@ -129,7 +129,7 @@ public class MazeGen : MonoBehaviour
                     {
                         continue;
                     }
-                    maze.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), wallTile);
+                    walls.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), wallTile);
                 }
             }
         }
