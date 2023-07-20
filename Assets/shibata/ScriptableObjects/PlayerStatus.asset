@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1720775d73bec42af7a8819533803b, type: 3}
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
-  defaultMoveSpeed: 3
+  defaultMoveSpeed: 5
   defaultAttackSpeed: 0.5
-  defaultpower: 1
+  defaultpower: 50
   defaultKnockForce: 20

@@ -21,7 +21,7 @@ public class MazeGen : MonoBehaviour
 
     private Vector3Int finishLocation, spawnLocation;
 
-    void Start()
+    void Awake()
     {
         //ゴールとスポーン地点を設定する
         finishLocation = new Vector3Int(Random.Range(3, i_max_x), Random.Range(3, i_max_y), 0);
