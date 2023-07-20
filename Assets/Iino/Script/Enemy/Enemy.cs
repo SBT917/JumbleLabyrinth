@@ -8,17 +8,22 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Animator))]
 public abstract class Enemy : MonoBehaviour
 {
-
+    [NonSerialized]
     public float health;
     public float maxHealth = 100f;
     public float speed = 5f;
 
-    public int playerMaze;
+    public int firstGenetrateNum;
+
+    [NonSerialized]
+    public int playerID;
+
     protected GameObject target;
 
     protected Animator animator;
 
-    public Tilemap map;
+    [NonSerialized]
+    public List<Tilemap> maps = new List<Tilemap>();
 
     [SerializeField]
     private TriggerEvent triggerEvent;
@@ -30,18 +35,21 @@ public abstract class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         health = maxHealth;
 
+
+        maps.Add(GameObject.Find("Grid1/walls1").GetComponent<Tilemap>());
+        maps.Add(GameObject.Find("Grid2/walls2").GetComponent<Tilemap>());
         Initialize();
     }
 
     protected abstract void Initialize();
 
-    public void TakeDamage(float damage, Transform attacker,float knockbackSpeed = 5, float knockbackTime = 1)
+    public void TakeDamage(float damage, Transform attacker, float knockbackSpeed = 5, float knockbackTime = 1)
     {
         health -= damage;
         //ノックバックする方向を決定
         Vector2 knockbackDirection = (transform.position - attacker.position).normalized;
 
-        ChangeState(new KnockbackState(gameObject, knockbackDirection, knockbackSpeed, knockbackTime));
+        ChangeState(new KnockbackState(gameObject,currentState, knockbackDirection, knockbackSpeed, knockbackTime));
         if (health <= 0)
         {
             TeleportAndResetHealth();
@@ -52,7 +60,14 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
-        currentState.UpdateState();
+        if (currentState != null)
+        {
+            currentState.UpdateState();
+        }
+        else
+        {
+            Debug.LogError("currentState is null");
+        }
     }
 
     public void ChangeState(IEnemyState newState)
@@ -100,9 +115,25 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void OnTargetExit(Collider2D collision);
     private void TeleportAndResetHealth()
     {
-        //敵のランダムな迷路にテレポート
+        // プレイヤーIDを切り替える
+        playerID = 1 - playerID;
 
+        // 敵の近くに空きがない場合、相手のマップにテレポートする
+        var randomPosition = WalkableTilesManager.instance.GetRandomPoint(playerID);
+
+        if (!randomPosition.HasValue) // null check
+        {
+            Debug.LogError($"No free tiles available for player {playerID}.");
+            return;
+        }
+
+        transform.position = randomPosition.Value;
+
+
+        // 初期化
         health = maxHealth;
+
+        Debug.Log($"Teleported to {transform.position}.");
     }
 
     private void SetAnimatorParameters(Vector2 direction)

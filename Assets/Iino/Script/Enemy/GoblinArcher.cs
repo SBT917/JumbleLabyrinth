@@ -6,11 +6,10 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GoblinArcher : Enemy
+public class RangedEnemy : Enemy
 {
     [SerializeField] 
-    private GameObject arrowPrefab;
-
+    private GameObject projectilePrefab;
 
     private RangedEnemyChasingState chasingState;
 
@@ -41,24 +40,24 @@ public class GoblinArcher : Enemy
     protected override void StartChasing()
     {
         //ChasingStateを割り当て、デリゲートにStartAttackingを割り当てる
-        chasingState = new RangedEnemyChasingState(this, target, map, this.gameObject);
+        chasingState = new RangedEnemyChasingState(this, target, maps[playerID], this.gameObject);
         chasingState.OnRaycastHit += StartAttacking;
         ChangeState(chasingState);
     }
 
     protected override void StartWander()
     {
-        ChangeState(new WanderState(gameObject, map));
+        ChangeState(new WanderState(gameObject, maps[playerID]));
     }
 
     protected override void StartMazeWalk()
     {
-        ChangeState(new MazeWalkState(gameObject, map));
+        ChangeState(new MazeWalkState(gameObject, maps[playerID]));
     }
 
     protected override void StartAttacking()
     {
-        ChangeState(new RangedAttackingState(gameObject, currentState, 1.0f, arrowPrefab, chasingState.direction));
+        ChangeState(new RangedAttackingState(gameObject, currentState, 1.0f, projectilePrefab, chasingState.direction));
     }
 
 }

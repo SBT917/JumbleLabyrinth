@@ -175,7 +175,7 @@ public class ChasingState : IEnemyState
     {
         if (Time.time >= nextPathfindingTime)
         {
-            Vector2Int goal = Vector2Int.FloorToInt(target.transform.position);
+            Vector2Int goal = Vector2Int.FloorToInt((Vector2)(target.transform.position - map.transform.position));
             Pathfinding(goal);
             nextPathfindingTime = Time.time + pathfindingInterval;
         }
@@ -222,8 +222,9 @@ public class ChasingState : IEnemyState
         var pathfinder = new Pathfinder<Vector2Int>(HeuristicFunction, ConnectedNodesFunction);
 
         // 敵キャラクターの位置とプレイヤーの位置をセル座標に変換
-        Vector2Int start = Vector2Int.FloorToInt(enemy.transform.position);
-        //Vector2Int goal = Vector2Int.FloorToInt(target.transform.position);
+        Vector2Int start = Vector2Int.FloorToInt((Vector2)(enemy.transform.position - map.transform.position));
+
+
 
         // 経路探索を実行
         bool pathFound = pathfinder.GenerateAstarPath(start, goal, out List<Vector2Int> path);
@@ -266,7 +267,7 @@ public class ChasingState : IEnemyState
             foreach (Vector2Int position in path)
             {
                 // Calculate a target position that is slightly inside the real target cell
-                Vector2 targetPosition = (Vector2)position + new Vector2(0.5f, 0.5f); // Adjust this buffer as needed
+                Vector2 targetPosition = (Vector2)position + new Vector2(0.5f, 0.5f) + (Vector2)map.transform.position; // Adjust this buffer as needed
 
                 while (Vector2.Distance((Vector2)enemy.transform.position, targetPosition) > 0.05f)
                 {
@@ -471,10 +472,6 @@ public class MazeWalkState : IEnemyState
 
     }
 
-    public List<Vector2Int> GetPathToDraw()
-    {
-        throw new NotImplementedException();
-    }
 
     public void UpdateState()
     {
@@ -527,17 +524,21 @@ public class MazeWalkState : IEnemyState
 public class KnockbackState : IEnemyState
 {
     private GameObject enemy;
+    protected IEnemyState previousState;
     private Vector3 direction;
     private float speed;
     private float knockbackTime;
     private float timer;
 
-    public KnockbackState(GameObject enemy, Vector3 direction, float speed, float knockbackTime)
+    public KnockbackState(GameObject enemy,IEnemyState enemyState, Vector3 direction, float speed, float knockbackTime)
     {
         this.enemy = enemy;
+        this.previousState = enemyState;
         this.direction = direction;
         this.speed = speed;
         this.knockbackTime = knockbackTime;
+
+        AfterEffect();
     }
 
     public void EnterState()
@@ -570,12 +571,20 @@ public class KnockbackState : IEnemyState
         
     }
 
-    public List<Vector2Int> GetPathToDraw()
+    public void AfterEffect()
     {
-        throw new NotImplementedException();
+        enemy.GetComponent<Enemy>().StartCoroutine(ReturnToPreviousState());
     }
 
-    // Other methods...
+    private IEnumerator ReturnToPreviousState()
+    {
+        // Wait for the attack animation to finish
+        yield return new WaitForSeconds(knockbackTime);
+
+        // After attack animation, return to the previous state
+        enemy.GetComponent<Enemy>().ChangeState(previousState);
+    }
+
 }
 
 

@@ -264,9 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ffeee5e084dfb47ade2a9d61b5b646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
   maxHealth: 100
   speed: 2
-  playerMaze: 0
-  map: {fileID: 0}
+  firstGenetrateNum: 10
   triggerEvent: {fileID: 1837985834371787015}

@@ -10,6 +10,7 @@ public class Ghost : Enemy
 {
     protected override void Initialize()
     {
+        
         StartMazeWalk();
     }
 
@@ -42,18 +43,25 @@ public class Ghost : Enemy
 
     protected override void StartChasing()
     {
-        ChangeState(new ChasingState(this, target, map, this.gameObject));
-        Debug.Log("Chasing");
+        ChangeState(new ChasingState(this, target, maps[playerID], this.gameObject));
     }
 
     protected override void StartWander()
     {
-        ChangeState(new WanderState(gameObject,map));
+        ChangeState(new WanderState(gameObject, maps[playerID]));
     }
 
     protected override void StartMazeWalk()
     {
-        ChangeState(new MazeWalkState(gameObject, map));
+        Debug.Log("MazeWalk");
+        if (playerID >= 0 && playerID < maps.Count)
+        {
+            ChangeState(new MazeWalkState(gameObject, maps[playerID]));
+        }
+        else
+        {
+            Debug.LogError("Invalid playerID or maps count" + "playerID:" + playerID + "maps.Count" + maps.Count);
+        }
     }
 
     protected override void StartAttacking()
