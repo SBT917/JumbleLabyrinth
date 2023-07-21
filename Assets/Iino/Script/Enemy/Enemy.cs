@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected abstract void Initialize();
 
-    public void TakeDamage(float damage, Transform attacker, float knockbackSpeed = 5, float knockbackTime = 1)
+    public void TakeDamage(float damage, Transform attacker, float knockbackSpeed = 2, float knockbackTime = 0.5f)
     {
         health -= damage;
         //ノックバックする方向を決定

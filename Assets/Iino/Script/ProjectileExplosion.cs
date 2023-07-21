@@ -17,7 +17,7 @@ public class ProjectileExplosion : MonoBehaviour
             if (collision.transform.TryGetComponent(out IKnockBackable knockBackable))
             {
                 Vector2 dir = collision.transform.position - transform.position;
-                knockBackable.StartKnockBack(dir, 10f, 0.1f);
+                knockBackable.StartKnockBack(dir, 2f, 0.1f);
             }
 
             if (collision.transform.TryGetComponent(out IStanable stanable))

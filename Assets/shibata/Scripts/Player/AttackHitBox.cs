@@ -15,7 +15,7 @@ public class AttackHitBox : MonoBehaviour
     {
         if(other.TryGetComponent(out Enemy enemy))
         {
-            enemy.TakeDamage(attackable.Power, transform, 5, 0.5f);
+            enemy.TakeDamage(attackable.Power, transform.parent, 2, 0.5f);
         }
     }
 }
