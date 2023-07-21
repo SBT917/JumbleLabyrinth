@@ -27,7 +27,6 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField]
     private TriggerEvent triggerEvent;
-
     private void Start()
     {
         triggerEvent.onTriggerEnter += OnTargetEnter;
@@ -39,7 +38,10 @@ public abstract class Enemy : MonoBehaviour
         maps.Add(GameObject.Find("Grid1/walls1").GetComponent<Tilemap>());
         maps.Add(GameObject.Find("Grid2/walls2").GetComponent<Tilemap>());
         Initialize();
+
+
     }
+
 
     protected abstract void Initialize();
 
@@ -86,11 +88,6 @@ public abstract class Enemy : MonoBehaviour
         ChangeState(new IdleState());
     }
 
-    protected virtual void StartWander()
-    {
-        //ChangeState(new WanderState());
-    }
-
     protected virtual void StartChasing()
     {
         //ChangeState(new ChasingState());
@@ -115,10 +112,10 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void OnTargetExit(Collider2D collision);
     private void TeleportAndResetHealth()
     {
-        // プレイヤーIDを切り替える
+        //// プレイヤーIDを切り替える
         playerID = 1 - playerID;
 
-        // 敵の近くに空きがない場合、相手のマップにテレポートする
+        //// 敵の近くに空きがない場合、相手のマップにテレポートする
         var randomPosition = WalkableTilesManager.instance.GetRandomPoint(playerID);
 
         if (!randomPosition.HasValue) // null check
@@ -126,14 +123,10 @@ public abstract class Enemy : MonoBehaviour
             Debug.LogError($"No free tiles available for player {playerID}.");
             return;
         }
-
-        transform.position = randomPosition.Value;
-
-
-        // 初期化
-        health = maxHealth;
-
-        Debug.Log($"Teleported to {transform.position}.");
+        var enemy = Instantiate(this, randomPosition.Value, Quaternion.identity);
+        enemy.playerID = playerID;
+        Destroy(gameObject);
+        //Debug.Log($"Teleported to {transform.position}.");
     }
 
     private void SetAnimatorParameters(Vector2 direction)

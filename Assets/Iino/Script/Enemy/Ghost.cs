@@ -46,11 +46,6 @@ public class Ghost : Enemy
         ChangeState(new ChasingState(this, target, maps[playerID], this.gameObject));
     }
 
-    protected override void StartWander()
-    {
-        ChangeState(new WanderState(gameObject, maps[playerID]));
-    }
-
     protected override void StartMazeWalk()
     {
         Debug.Log("MazeWalk");

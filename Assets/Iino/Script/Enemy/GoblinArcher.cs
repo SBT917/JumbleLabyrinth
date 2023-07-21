@@ -45,11 +45,6 @@ public class RangedEnemy : Enemy
         ChangeState(chasingState);
     }
 
-    protected override void StartWander()
-    {
-        ChangeState(new WanderState(gameObject, maps[playerID]));
-    }
-
     protected override void StartMazeWalk()
     {
         ChangeState(new MazeWalkState(gameObject, maps[playerID]));
