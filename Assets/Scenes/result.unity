@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator1: {fileID: 1023654764}
   animator2: {fileID: 1802104743}
+  winnerNum: {fileID: 11400000, guid: ad861086c8d73564fa6ac9ff6dcaa538, type: 2}
 --- !u!4 &463215976
 Transform:
   m_ObjectHideFlags: 0
