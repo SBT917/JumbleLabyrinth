@@ -20,6 +20,8 @@ public class MazeGen : MonoBehaviour
     private const int Floor = 0, Wall = 9;
 
     private Vector3Int finishLocation, spawnLocation;
+    [SerializeField] GameObject goalTrigger;
+    bool goalSpawned = false;
 
     void Awake()
     {
@@ -109,9 +111,11 @@ public class MazeGen : MonoBehaviour
                 if (i_map[x, y] == Floor)
                 {
                     // è∞ÇÃÉ^ÉCÉãÇê›íËÇ∑ÇÈ
-                    if (new Vector3Int(x, y, 0) == finishLocation)
+                    if (new Vector3Int(x, y, 0) == finishLocation && !goalSpawned)
                     {
                         maze.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), finishTile);
+                        Instantiate(goalTrigger, new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), Quaternion.identity);
+                        goalSpawned = true;
                     }
                     else if (new Vector3Int(x, y, 0) == spawnLocation)
                     {
@@ -119,6 +123,10 @@ public class MazeGen : MonoBehaviour
                     }
                     else
                     {
+                        if (finishLocation == new Vector3Int(x, y, 0) || spawnLocation == new Vector3Int(x, y, 0))
+                        {
+                            continue;
+                        }
                         maze.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), floorTile);
                     }
                 }
