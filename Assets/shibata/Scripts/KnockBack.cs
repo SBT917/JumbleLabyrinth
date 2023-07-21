@@ -9,7 +9,14 @@ public class KnockBack : MonoBehaviour, IKnockBackable
     float force;
     float time;
 
+    IInvisiblable invisiblable;
+
     public bool IsKnockBack { get => isKnockBack; }
+
+    void Awake()
+    {
+        TryGetComponent(out  invisiblable);
+    }
 
     void FixedUpdate()
     {
@@ -21,6 +28,8 @@ public class KnockBack : MonoBehaviour, IKnockBackable
 
     public void StartKnockBack(Vector3 direction, float force, float time)
     {
+        if (invisiblable.IsInvisible) return;
+
         isKnockBack = true;
         this.direction = direction;
         this.force = force;

@@ -40,7 +40,7 @@ public class EnemyGenerater : MonoBehaviour
                         break;  // 空きタイルが見つからなかった場合、プレイヤーを変える
                     }
 
-                    var enemy = Instantiate(enemies[j], spawnPosition.Value, Quaternion.identity);
+                    var enemy = Instantiate(enemies[j], spawnPosition.Value, Quaternion.identity, transform);
                     enemy.GetComponent<Enemy>().playerID = i;
                 }
             }

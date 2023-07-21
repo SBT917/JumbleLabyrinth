@@ -15,18 +15,7 @@ public class AttackHitBox : MonoBehaviour
     {
         if(other.TryGetComponent(out Enemy enemy))
         {
-            enemy.TakeDamage(attackable.Power, transform);
+            enemy.TakeDamage(attackable.Power, transform, 5, 0.5f);
         }
-
-        //if (other.TryGetComponent(out IDamageable target))
-        //{
-        //    target.TakeDamage(attackable.Power);
-        //}
-
-        //if(other.TryGetComponent(out IKnockBackable knockBackable))
-        //{
-        //    Vector3 dir = other.transform.position - transform.position;
-        //    knockBackable.StartKnockBack(dir, attackable.KnockForce, 0.1f);
-        //}
     }
 }

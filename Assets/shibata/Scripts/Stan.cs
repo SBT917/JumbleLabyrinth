@@ -8,6 +8,7 @@ public class Stan : MonoBehaviour, IStanable
     float count;
     IMoveable moveable;
     IAttackable attackable;
+    IInvisiblable invisiblable;
 
     public bool IsStan { get => isStan; }
 
@@ -15,6 +16,7 @@ public class Stan : MonoBehaviour, IStanable
     {
         TryGetComponent(out moveable);
         TryGetComponent(out attackable);
+        TryGetComponent(out invisiblable);
     }
 
     void Update()
@@ -27,10 +29,14 @@ public class Stan : MonoBehaviour, IStanable
     
     public void StartStan(float time)
     {
+        if (invisiblable.IsInvisible) return;
+
         isStan = true;
         count = time;
         if (moveable != null) moveable.Enable = false;
         if (attackable != null) attackable.Enable = false;
+
+        invisiblable.Invisible();
     }
 
     public void UpdateStan()
