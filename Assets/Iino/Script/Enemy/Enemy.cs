@@ -27,8 +27,16 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField]
     private TriggerEvent triggerEvent;
+
+    [SerializeField]
+    private GameObject EnemySpawnAnim;
+
+    [SerializeField]
+    private GameObject EnemyDestroyAnim;
+
     private void Start()
     {
+        CreateEnemySpawnAnimation();
         triggerEvent.onTriggerEnter += OnTargetEnter;
         triggerEvent.onTriggerExit += OnTargetExit;
         animator = GetComponent<Animator>();
@@ -112,6 +120,8 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void OnTargetExit(Collider2D collision);
     private void TeleportAndResetHealth()
     {
+        CreateEnemyDestroyAnimation();
+
         //// ÉvÉåÉCÉÑÅ[IDÇêÿÇËë÷Ç¶ÇÈ
         playerID = 1 - playerID;
 
@@ -135,5 +145,15 @@ public abstract class Enemy : MonoBehaviour
         animator.SetFloat("moveY", direction.y);
     }
 
+
+    private void CreateEnemySpawnAnimation()
+    {
+        Instantiate(EnemySpawnAnim,transform.position,Quaternion.identity);
+    }
+
+    private void CreateEnemyDestroyAnimation()
+    {
+        Instantiate(EnemyDestroyAnim, transform.position, Quaternion.identity);
+    }
 }
 
