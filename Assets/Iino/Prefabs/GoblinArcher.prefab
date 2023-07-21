@@ -268,4 +268,6 @@ MonoBehaviour:
   speed: 2
   firstGenetrateNum: 5
   triggerEvent: {fileID: 1837985834371787015}
+  EnemySpawnAnim: {fileID: 7332198054230997947, guid: ae193a0f1f9e8264c839859967fd5a73, type: 3}
+  EnemyDestroyAnim: {fileID: 3337643536992990949, guid: e1954a6e0fef6684e8c95ba89b5b29ac, type: 3}
   projectilePrefab: {fileID: 5374369984345472566, guid: 20019ad01dbe19c458899f6c284c7500, type: 3}
