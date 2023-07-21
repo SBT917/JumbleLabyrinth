@@ -18,7 +18,6 @@ public class chestMotion : MonoBehaviour
         if (!hasBeenClicked)
         {
             animator.enabled = true; // マウスクリック時にAnimatorを有効にする
-            animator.SetTrigger("TreasureChest1");
             hasBeenClicked = true;
         }
     }

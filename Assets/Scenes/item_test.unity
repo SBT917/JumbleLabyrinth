@@ -316,6 +316,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Treasure Chest
       objectReference: {fileID: 0}
+    - target: {fileID: 5467165048032970500, guid: a27f836fb05ce7142969085bee256a82, type: 3}
+      propertyPath: itemSprites.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467165048032970500, guid: a27f836fb05ce7142969085bee256a82, type: 3}
+      propertyPath: itemSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3b3bf4a5b3ffb5a409567a1c6b4fdc67, type: 3}
+    - target: {fileID: 5467165048032970500, guid: a27f836fb05ce7142969085bee256a82, type: 3}
+      propertyPath: itemSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7b302e4c1edec28459bf19d3d409d1d2, type: 3}
+    - target: {fileID: 5467165048032970500, guid: a27f836fb05ce7142969085bee256a82, type: 3}
+      propertyPath: itemSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 46d5a3f5d417bb645a15b29580216914, type: 3}
     - target: {fileID: 8958152772826800844, guid: a27f836fb05ce7142969085bee256a82, type: 3}
       propertyPath: m_RootOrder
       value: 1

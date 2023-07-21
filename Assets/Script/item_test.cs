@@ -62,4 +62,26 @@ public class item_test : MonoBehaviour
         int randomIndex = Random.Range(0, sprites.Length);
         return sprites[randomIndex];
     }
+    private void HandleItemEffect(string itemName)
+    {
+        // アイテムの名前によって処理を切り替え
+        switch (itemName)
+        {
+            case "questionmark":
+                // questionmarkの効果をプレイヤーに適用する処理
+                Debug.Log("questionmarkの効果を発動しました。");
+                break;
+            case "slowly_boots":
+                // slowly_bootsの効果をプレイヤーに適用する処理
+                Debug.Log("slowly_bootsの効果を発動しました。");
+                break;
+            case "squid":
+                // squidの効果をプレイヤーに適用する処理
+                Debug.Log("squidの効果を発動しました。");
+                break;
+            default:
+                Debug.LogWarning("未知のアイテム名です。");
+                break;
+        }
+    }
 }
