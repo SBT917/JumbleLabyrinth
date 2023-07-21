@@ -14,7 +14,17 @@ public class ProjectileExplosion : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            //TODO:プレイヤーをスタンさせる
+            if (collision.transform.TryGetComponent(out IKnockBackable knockBackable))
+            {
+                Vector2 dir = collision.transform.position - transform.position;
+                knockBackable.StartKnockBack(dir, 10f, 0.1f);
+            }
+
+            if (collision.transform.TryGetComponent(out IStanable stanable))
+            {
+                stanable.StartStan(1f);
+            }
+
             //コライダーをオフに
             GetComponent<Collider2D>().enabled = false;
         }

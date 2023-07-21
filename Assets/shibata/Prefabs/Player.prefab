@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 7228538135458848088}
   - component: {fileID: 6601293707367758092}
   - component: {fileID: 989948467990083942}
+  - component: {fileID: 4617851835871326078}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -40,7 +41,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8862307173790571791
 SpriteRenderer:
@@ -120,7 +121,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -184,7 +185,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &3295507833529078197
 Animator:
@@ -282,3 +283,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87671f8ac0799f443a0765c343d0e1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4617851835871326078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7890935266504979488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166f933fe1e2c7e449cd355386071f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invTime: 2
