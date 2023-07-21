@@ -114,7 +114,7 @@ public class MazeGen : MonoBehaviour
                     if (new Vector3Int(x, y, 0) == finishLocation && !goalSpawned)
                     {
                         maze.SetTile(new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), finishTile);
-                        Instantiate(goalTrigger, new Vector3Int(x - (i_max_x / 2), y - (i_max_y / 2), 0), Quaternion.identity);
+                        Instantiate(goalTrigger, new Vector3Int(x - (i_max_x / 2) + (int)transform.parent.position.x, y - (i_max_y / 2), 0), Quaternion.identity, transform);
                         goalSpawned = true;
                     }
                     else if (new Vector3Int(x, y, 0) == spawnLocation)

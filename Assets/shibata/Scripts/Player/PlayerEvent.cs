@@ -10,6 +10,7 @@ public class PlayerEvent : MonoBehaviour
     {
         if (collision.CompareTag("Goal"))
         {
+            Debug.Log(gameObject.name + "Goal");
             signal.Raise();
         }
     }

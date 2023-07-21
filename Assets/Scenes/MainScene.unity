@@ -1280,6 +1280,10 @@ PrefabInstance:
       propertyPath: signal
       value: 
       objectReference: {fileID: 11400000, guid: 0e36c5cf37a306c4b8484224bae373f5, type: 2}
+    - target: {fileID: 1864181199225061377, guid: 0f04918ce343aba47a3f3e810bfa2903, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3883497268743098316, guid: 0f04918ce343aba47a3f3e810bfa2903, type: 3}
       propertyPath: m_RootOrder
       value: -1
