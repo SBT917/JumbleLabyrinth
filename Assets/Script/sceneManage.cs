@@ -16,7 +16,7 @@ public class sceneManage : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SceneManager.LoadScene("item_test");
+            SceneManager.LoadScene("MainScene");
         }
     }
 }
