@@ -32,7 +32,13 @@ public class MazeGen : MonoBehaviour
         // ñ¿òHÇê∂ê¨Ç∑ÇÈ
         GenerateMaze();
     }
-
+    private void SecureSpawn()
+    {
+        i_map[spawnLocation.x + 1, spawnLocation.y] = Floor;
+        i_map[spawnLocation.x - 1, spawnLocation.y] = Floor;
+        i_map[spawnLocation.x, spawnLocation.y + 1] = Floor;
+        i_map[spawnLocation.x, spawnLocation.y - 1] = Floor;
+    }
     private void GenerateMaze()
     {
         int i_temp;
@@ -86,6 +92,7 @@ public class MazeGen : MonoBehaviour
 
     private void FillOuterWalls()
     {
+
         // è„â∫ÇÃäOï«ÇñÑÇﬂÇÈ
         for (int i = 1; i <= i_max_x; i++)
         {
@@ -103,6 +110,7 @@ public class MazeGen : MonoBehaviour
 
     private void FillMazeTiles()
     {
+        SecureSpawn();
         // ñ¿òHÇÃÉ^ÉCÉãÇñÑÇﬂÇÈ
         for (int x = 1; x <= i_max_x; x++)
         {
