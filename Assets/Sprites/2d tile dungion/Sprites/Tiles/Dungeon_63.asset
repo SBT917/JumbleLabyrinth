@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dungeon_63
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 6770974209378706146, guid: 9cc0ee9be2f5b384786a5d97d0166648, type: 3}
-  m_Color: {r: 0.7967707, g: 1, b: 0.033018887, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
