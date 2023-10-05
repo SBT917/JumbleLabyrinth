@@ -13,9 +13,17 @@ public class AttackHitBox : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.TryGetComponent(out Enemy enemy))
+        if (other.gameObject.CompareTag("Enemy"))
         {
+            other.TryGetComponent(out Enemy enemy);
             enemy.TakeDamage(attackable.Power, transform.parent, 2, 0.5f);
         }
+        else if(other.gameObject.CompareTag("Projectile"))
+        {
+            other.TryGetComponent(out EnemyProjectile projectile);
+            projectile.ShotDown();
+        }
+
+
     }
 }

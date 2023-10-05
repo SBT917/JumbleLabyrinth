@@ -8,6 +8,9 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Animator))]
 public abstract class Enemy : MonoBehaviour
 {
+    [SerializeField]
+    public int EnemyID;
+
     [NonSerialized]
     public float health;
     public float maxHealth = 100f;
@@ -33,6 +36,17 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject EnemyDestroyAnim;
+
+    [SerializeField]
+    private GameObject originalEnemyPrefab;
+
+    [SerializeField]
+    private float dropRate;
+
+
+    [SerializeField]
+    private GameObject[] DropItems;
+
 
     private void Start()
     {
@@ -121,22 +135,12 @@ public abstract class Enemy : MonoBehaviour
     private void TeleportAndResetHealth()
     {
         CreateEnemyDestroyAnimation();
+        DropItemLottery();
 
         //// プレイヤーIDを切り替える
         playerID = 1 - playerID;
-
-        //// 敵の近くに空きがない場合、相手のマップにテレポートする
-        var randomPosition = WalkableTilesManager.instance.GetRandomPoint(playerID);
-
-        if (!randomPosition.HasValue) // null check
-        {
-            Debug.LogError($"No free tiles available for player {playerID}.");
-            return;
-        }
-        var enemy = Instantiate(this, randomPosition.Value, Quaternion.identity);
-        enemy.playerID = playerID;
+        EnemySpawnManager.instance.RespawnEnemy(EnemyID, playerID, transform.position);
         Destroy(gameObject);
-        //Debug.Log($"Teleported to {transform.position}.");
     }
 
     private void SetAnimatorParameters(Vector2 direction)
@@ -154,6 +158,16 @@ public abstract class Enemy : MonoBehaviour
     private void CreateEnemyDestroyAnimation()
     {
         Instantiate(EnemyDestroyAnim, transform.position, Quaternion.identity);
+    }
+
+    private void DropItemLottery()
+    {
+        float randomValue = UnityEngine.Random.value; // 0.0から1.0までの乱数を取得
+        if (randomValue <= dropRate)
+        {
+            // アイテムをドロップ
+            Instantiate(DropItems[UnityEngine.Random.Range(0,DropItems.Length - 1)], transform.position, Quaternion.identity);
+        }
     }
 }
 

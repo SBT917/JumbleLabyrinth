@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3667460244607699854}
   - component: {fileID: 611415569131257981}
   m_Layer: 3
-  m_Name: RedGhost
+  m_Name: BlackGhost
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -1106747401, guid: 27491e0344da8eb4eaf60cdc7e5c071c, type: 3}
+  m_Sprite: {fileID: 1752007496, guid: 85d92c3be201f904c96f30ca99077175, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -241,7 +241,7 @@ Animator:
   m_GameObject: {fileID: 7063069362509772957}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b62d1d780d89c6248879efe986a173a5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3faf2aa30155e3b42914adda178a9968, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -264,9 +264,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ffeee5e084dfb47ade2a9d61b5b646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  speed: 2
-  firstGenetrateNum: 10
+  EnemyID: 1
+  maxHealth: 50
+  speed: 4
+  firstGenetrateNum: 3
   triggerEvent: {fileID: 1837985834371787015}
   EnemySpawnAnim: {fileID: 7332198054230997947, guid: ae193a0f1f9e8264c839859967fd5a73, type: 3}
   EnemyDestroyAnim: {fileID: 3337643536992990949, guid: e1954a6e0fef6684e8c95ba89b5b29ac, type: 3}
+  originalEnemyPrefab: {fileID: 7063069362509772957}
+  dropRate: 1
+  DropItems:
+  - {fileID: 5515422421107454965, guid: 09a04230d2dd1c64bbba3a061955e92d, type: 3}
+  - {fileID: 6612601866161248433, guid: 5d7bd38fd3a0d0a41b797b6f9d662617, type: 3}
+  - {fileID: 7750292885874777731, guid: 8666098648d849440bc4422f7e93f8c4, type: 3}

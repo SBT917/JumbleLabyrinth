@@ -14,6 +14,9 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField]
     private GameObject explosion;
 
+    [SerializeField]
+    private bool isDestructibleByPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +52,14 @@ public class EnemyProjectile : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = direction.normalized * speed;
+    }
+
+    public void ShotDown()
+    {
+        if(isDestructibleByPlayer)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetDirection(Vector2 direction)
