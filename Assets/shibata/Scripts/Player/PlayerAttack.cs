@@ -35,6 +35,7 @@ public class PlayerAttack : MonoBehaviour, IAttackable
         if (isAttacking) return;
 
         StartCoroutine(AttackCroutine());
+        AudioManager.instance.PlaySE("Attack");
     }
 
     IEnumerator AttackCroutine()
