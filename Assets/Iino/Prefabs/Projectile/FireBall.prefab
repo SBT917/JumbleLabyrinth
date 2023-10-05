@@ -227,3 +227,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   explosion: {fileID: 6202439828208535542, guid: 89e3896358504c34ab8d2c8dbf871755, type: 3}
+  isDestructibleByPlayer: 0

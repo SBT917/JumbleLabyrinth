@@ -12,8 +12,12 @@ public class Item : MonoBehaviour
 
     [NonSerialized]
     public PlayerMove move;
-    private bool enemySend = false;
-    public GameObject Enemy;
+
+    [SerializeField]
+    private int SendEnemyID;
+
+    [SerializeField]
+    private int SendPlayerID;
     private void Start()
     {
         move = gameObject.GetComponent<PlayerMove>();
@@ -60,11 +64,10 @@ public class Item : MonoBehaviour
                 }
             }
         }
-        if(collision.gameObject.CompareTag("questionmark"))
+        if(collision.gameObject.CompareTag("skelton_item"))
         {
             Debug.Log("shadowverse");
-            enemySend = true;
-            EnemySend();
+            EnemySend(collision.transform);
         }
     }
    
@@ -79,8 +82,8 @@ public class Item : MonoBehaviour
         ikaRenderer.enabled = false;
         ikasumi = false;
     }
-    private void EnemySend()
+    private void EnemySend(Transform itemPos)
     {
-        Instantiate(Enemy,transform.position,Quaternion.identity);
+        EnemySpawnManager.instance.RespawnEnemy(SendEnemyID, SendPlayerID, transform.position);
     }
 }

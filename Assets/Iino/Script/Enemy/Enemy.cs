@@ -67,7 +67,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected abstract void Initialize();
 
-    public void TakeDamage(float damage, Transform attacker, float knockbackSpeed = 2, float knockbackTime = 0.5f)
+    public virtual void TakeDamage(float damage, Transform attacker, float knockbackSpeed = 2, float knockbackTime = 0.5f)
     {
         health -= damage;
         //ノックバックする方向を決定
@@ -132,7 +132,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected abstract void OnTargetEnter(Collider2D collision);
     protected abstract void OnTargetExit(Collider2D collision);
-    private void TeleportAndResetHealth()
+    protected virtual void TeleportAndResetHealth()
     {
         CreateEnemyDestroyAnimation();
         DropItemLottery();
@@ -155,7 +155,7 @@ public abstract class Enemy : MonoBehaviour
         Instantiate(EnemySpawnAnim,transform.position,Quaternion.identity);
     }
 
-    private void CreateEnemyDestroyAnimation()
+    protected void CreateEnemyDestroyAnimation()
     {
         Instantiate(EnemyDestroyAnim, transform.position, Quaternion.identity);
     }
@@ -166,7 +166,7 @@ public abstract class Enemy : MonoBehaviour
         if (randomValue <= dropRate)
         {
             // アイテムをドロップ
-            Instantiate(DropItems[UnityEngine.Random.Range(0,DropItems.Length - 1)], transform.position, Quaternion.identity);
+            Instantiate(DropItems[UnityEngine.Random.Range(0,DropItems.Length)], transform.position, Quaternion.identity);
         }
     }
 }
