@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGenerater : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour
 {
     // シングルトン
-    public static EnemyGenerater instance;
+    public static EnemySpawnManager instance;
     private void Awake()
     {
         if (instance == null)
@@ -16,11 +16,18 @@ public class EnemyGenerater : MonoBehaviour
 
     [SerializeField]
     private GameObject[] enemies;
+
+    [SerializeField]
+    private GameObject[] players;
+
+    [SerializeField]
+    GameObject respawnEffect;
     
-    private int playerNum = 2;
+    private int playerNum;
     // Start is called before the first frame update
     void Start()
     {
+        playerNum = players.Length;
         GenerateFirstEnemy();
     }
 
@@ -47,9 +54,23 @@ public class EnemyGenerater : MonoBehaviour
         }
     }
 
-
-    void Update()
+    public void RespawnEnemy(int enemyID, int nextSpawnMapID, Vector3 currentEnemyPosition)
     {
-        
+        var spawnPosition = WalkableTilesManager.instance.GetRandomPointNearPlayer(nextSpawnMapID, players[nextSpawnMapID].transform.position, 5, 2);
+        var effect = Instantiate(respawnEffect, currentEnemyPosition, Quaternion.identity);
+        effect.GetComponent<SendEffectMove>().StartMoving(spawnPosition.Value);
+
+        StartCoroutine(DelaySpawnEnemy(enemyID, nextSpawnMapID, spawnPosition.Value));
     }
+
+
+    public IEnumerator DelaySpawnEnemy(int enemyID, int nextSpawnMapID, Vector3 spawnPosition)
+    {
+        // 3秒待機
+        yield return new WaitForSeconds(1f);
+        var respawnEnemy = Instantiate(enemies[enemyID], spawnPosition, Quaternion.identity);
+        respawnEnemy.GetComponent<Enemy>().playerID = nextSpawnMapID;
+    }
+
+
 }

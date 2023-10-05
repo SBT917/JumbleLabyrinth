@@ -54,4 +54,22 @@ public class GetFreeTile : MonoBehaviour
         return freeTiles;
     }
     
+
+    public List<Vector3Int> GetNearFreeTile(Vector3Int pos,int maxDistance,int minDistance)
+    {
+        List<Vector3Int> resultTile = new List<Vector3Int>();
+
+        foreach (Vector3Int tile in freeTiles)
+        {
+            float distance = Vector3Int.Distance(pos, tile);
+            if(distance > minDistance && distance < maxDistance)
+            {
+                resultTile.Add(tile);
+            }
+        }
+
+        return resultTile;
+    }
+
+
 }

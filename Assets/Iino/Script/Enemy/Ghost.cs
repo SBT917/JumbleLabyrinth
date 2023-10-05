@@ -58,7 +58,6 @@ public class Ghost : Enemy
 
     protected override void StartMazeWalk()
     {
-        Debug.Log("MazeWalk");
         if (playerID >= 0 && playerID < maps.Count)
         {
             ChangeState(new MazeWalkState(gameObject, maps[playerID]));

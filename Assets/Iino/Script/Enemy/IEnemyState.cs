@@ -236,7 +236,6 @@ public class RangedEnemyChasingState : ChasingState
         // レイが何かに接触した場合
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject.name);
             // レイがプレイヤーに接触した場合
             if (hit.collider.gameObject == target)
             {
@@ -331,19 +330,19 @@ public class RangedAttackingState : AttackingState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        float offsetDistance = 1.0f;
+        float offsetDistance = 3.0f;
 
-        // Compute the spawn position for the projectile.
+        // 発射物の初期位置を割り出す
         Vector3 spawnPosition = enemy.transform.position + enemy.transform.forward * offsetDistance;
 
-        // Get the direction from animator.
+        // アニメーターから方向を取得
         Animator animator = enemy.GetComponent<Animator>();
         Vector2 direction = new Vector2(animator.GetFloat("MoveX"), animator.GetFloat("MoveY"));
 
-        // Instantiate the projectile at the computed position, and orient it towards the direction.
+        // 割り出した位置に発射物を生成する
         GameObject projectile = UnityEngine.Object.Instantiate(projectilePrefab, spawnPosition, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
 
-        // Set the direction of the projectile.
+        // 発射物の回転を合わせる
         EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
         if (projectileScript != null)
         {
