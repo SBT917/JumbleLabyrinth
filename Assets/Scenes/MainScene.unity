@@ -1920,7 +1920,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836954984
 GameObject:
@@ -2100,6 +2100,9 @@ MonoBehaviour:
   - name: Stan
     clip: {fileID: 8300000, guid: c63dfffa3f1231a42a3e7a7ed0a42887, type: 3}
     volume: 1
+  - name: Stan
+    clip: {fileID: 8300000, guid: 098cd073fdb43a047bffd6b2e45e8ded, type: 3}
+    volume: 1
 --- !u!4 &1960373262
 Transform:
   m_ObjectHideFlags: 0
@@ -2113,7 +2116,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1960373263
 AudioSource:
