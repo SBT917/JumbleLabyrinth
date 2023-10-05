@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
 {
     public FloatValue winPlayerNum;
 
+    private void Start()
+    {
+        AudioManager.instance.PlayBGM("MainBgm");
+    }
+
     public void WinPlayer1()
     {
         winPlayerNum.runtimeValue = 1;

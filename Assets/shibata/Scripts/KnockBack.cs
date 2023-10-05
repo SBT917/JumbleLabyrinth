@@ -34,6 +34,8 @@ public class KnockBack : MonoBehaviour, IKnockBackable
         this.direction = direction;
         this.force = force;
         this.time = time;
+
+        AudioManager.instance.PlaySE("Damage");
     }
 
     public void UpdateKnockBack()
