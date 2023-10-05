@@ -93,7 +93,7 @@ public class WalkableTilesManager : MonoBehaviour
     /// <param name="playerPosition"></param>
     /// <param name="maxDistance"></param>
     /// <returns></returns>
-    public Vector3? GetRandomPointNearPlayer(int playerIndex, Vector3 playerPosition, float maxDistance)
+    public Vector3? GetRandomPointNearPlayer(int playerIndex, Vector3 playerPosition, float maxDistance,float minDistance)
     {
         // プレイヤーの近くの歩行可能なタイルを格納するリスト
         List<Vector3Int> tilesNearPlayer = new List<Vector3Int>();
@@ -107,7 +107,7 @@ public class WalkableTilesManager : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(playerPosition, worldPosition);
 
             // タイルがプレイヤーの近くにあるか判定
-            if (distanceToPlayer <= maxDistance)
+            if (distanceToPlayer <= maxDistance && distanceToPlayer >= minDistance)
             {
                 tilesNearPlayer.Add(tile);
             }
@@ -116,8 +116,8 @@ public class WalkableTilesManager : MonoBehaviour
         // 近くのタイルが存在しない場合
         if (tilesNearPlayer.Count == 0)
         {
-            Debug.LogError("No free tiles available near player!");
-            return null;
+            Debug.LogError("指定された座標の近くに空きタイルが存在しない");
+            return GetRandomPoint(playerIndex);
         }
 
         // 近くのタイルの中からランダムに選ぶ
@@ -125,9 +125,11 @@ public class WalkableTilesManager : MonoBehaviour
         Vector3Int localPosition = tilesNearPlayer[randomIndex];
 
         // Cell の中心にオフセットを追加
-        Vector3 centerOffset = new Vector3(0f, 0f, 0);
+        Vector3 centerOffset = new Vector3(0.5f, 0.5f, 0);
         Vector3 worldPositionNearPlayer = tilemaps[playerIndex].CellToWorld(localPosition) + centerOffset;
 
+        Debug.Log("リスポーン場所：" + worldPositionNearPlayer.ToString());
+        tilesNearPlayer.Clear();
         return worldPositionNearPlayer;
     }
 }
