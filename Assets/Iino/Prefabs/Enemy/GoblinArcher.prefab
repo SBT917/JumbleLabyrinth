@@ -272,9 +272,9 @@ MonoBehaviour:
   EnemySpawnAnim: {fileID: 7332198054230997947, guid: ae193a0f1f9e8264c839859967fd5a73, type: 3}
   EnemyDestroyAnim: {fileID: 3337643536992990949, guid: e1954a6e0fef6684e8c95ba89b5b29ac, type: 3}
   originalEnemyPrefab: {fileID: 7063069362509772957}
-  dropRate: 0.2
+  dropRate: 0.5
   DropItems:
-  - {fileID: 5515422421107454965, guid: 09a04230d2dd1c64bbba3a061955e92d, type: 3}
-  - {fileID: 6612601866161248433, guid: 5d7bd38fd3a0d0a41b797b6f9d662617, type: 3}
-  - {fileID: 7750292885874777731, guid: 8666098648d849440bc4422f7e93f8c4, type: 3}
+  - {fileID: 481002988032137448, guid: 33526036ea1a4204f9520d5ab462f14d, type: 3}
+  - {fileID: 6552638594837958890, guid: 3aafaac9044838f4a8ce569431918250, type: 3}
+  - {fileID: 5962314247345894967, guid: 77d977d29df221045be6498df596f73e, type: 3}
   projectilePrefab: {fileID: 5374369984345472566, guid: 20019ad01dbe19c458899f6c284c7500, type: 3}
