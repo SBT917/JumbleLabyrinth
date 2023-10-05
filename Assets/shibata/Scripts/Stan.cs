@@ -37,6 +37,7 @@ public class Stan : MonoBehaviour, IStanable
         if (attackable != null) attackable.Enable = false;
 
         invisiblable.Invisible();
+        AudioManager.instance.PlaySE("Stan");
     }
 
     public void UpdateStan()
