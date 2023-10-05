@@ -7,6 +7,11 @@ TagManager:
   - Enemy
   - Wall
   - Goal
+  - Item
+  - slowly
+  - haste
+  - squid
+  - questionmark
   layers:
   - Default
   - TransparentFX

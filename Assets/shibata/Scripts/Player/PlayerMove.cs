@@ -1,33 +1,33 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerMove : MonoBehaviour, IMoveable
 {
     [SerializeField] PlayerStatus status;
 
     bool enable = true;
     Rigidbody2D rigid;
-    float moveSpeed; //移動速度
+   public float moveSpeed; //移動速度
     Vector3 moveVec; //移動ベクトル
-
     public bool Enable
     {
         get => enable;
-        set => enable = value; 
+        set => enable = value;
     }
 
-    public float Speed 
-    { 
+    public float Speed
+    {
         get => moveSpeed;
-        set => moveSpeed = value; 
-    } 
+        set => moveSpeed = value;
+    }
 
-    public Vector3 Direction 
-    { 
+    public Vector3 Direction
+    {
         get => moveVec;
-        set => moveVec = value; 
-    } 
+        set => moveVec = value;
+    }
 
     void Awake()
     {
@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour, IMoveable
     }
 
     void FixedUpdate()
-    { 
+    {
         Move(moveVec);
     }
 
