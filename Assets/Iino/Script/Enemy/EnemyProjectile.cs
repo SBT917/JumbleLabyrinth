@@ -30,7 +30,11 @@ public class EnemyProjectile : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.transform.TryGetComponent(out IInvisiblable invisiblable);
-            if (invisiblable.IsInvisible) return;
+            if (invisiblable.IsInvisible)
+            {
+                Destroy(gameObject); 
+                return;
+            }
 
             if (collision.transform.TryGetComponent(out IKnockBackable knockBackable))
             {
