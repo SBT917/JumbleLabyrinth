@@ -41,11 +41,17 @@ public abstract class Enemy : MonoBehaviour
     private GameObject originalEnemyPrefab;
 
     [SerializeField]
-    private float dropRate;
+    private float itemDropRate;
+
+    [SerializeField]
+    private float coinDropRate;
 
 
     [SerializeField]
     private GameObject[] DropItems;
+
+    [SerializeField]
+    private GameObject coin;
 
 
     private void Start()
@@ -163,11 +169,29 @@ public abstract class Enemy : MonoBehaviour
     private void DropItemLottery()
     {
         float randomValue = UnityEngine.Random.value; // 0.0から1.0までの乱数を取得
-        if (randomValue <= dropRate)
+        if(randomValue <= coinDropRate)
+        {
+            //コインをドロップ
+            GenerateCoin();
+            return;
+        }
+
+        randomValue = UnityEngine.Random.value; // 0.0から1.0までの乱数を取得
+        if (randomValue <= itemDropRate)
         {
             // アイテムをドロップ
-            Instantiate(DropItems[UnityEngine.Random.Range(0,DropItems.Length)], transform.position, Quaternion.identity);
+            GenerateItem();
         }
+    }
+
+    private void GenerateCoin()
+    {
+        Instantiate(coin, transform.position, Quaternion.identity);
+    }
+
+    private void GenerateItem()
+    {
+        Instantiate(DropItems[UnityEngine.Random.Range(0, DropItems.Length)], transform.position, Quaternion.identity);
     }
 }
 

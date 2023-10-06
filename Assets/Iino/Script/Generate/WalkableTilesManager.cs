@@ -128,7 +128,6 @@ public class WalkableTilesManager : MonoBehaviour
         Vector3 centerOffset = new Vector3(0.5f, 0.5f, 0);
         Vector3 worldPositionNearPlayer = tilemaps[playerIndex].CellToWorld(localPosition) + centerOffset;
 
-        Debug.Log("リスポーン場所：" + worldPositionNearPlayer.ToString());
         tilesNearPlayer.Clear();
         return worldPositionNearPlayer;
     }

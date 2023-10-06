@@ -346,7 +346,6 @@ public class RangedAttackingState : AttackingState
         EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
         if (projectileScript != null)
         {
-            Debug.Log(direction);
             projectileScript.SetDirection(direction);
         }
     }
