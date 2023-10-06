@@ -41,7 +41,7 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     IEnumerator AttackCroutine()
     {
         isAttacking = true;
-        Debug.Log("Attack");
+        //Debug.Log("Attack");
 
         Vector3 dir = Vector3.zero;
 

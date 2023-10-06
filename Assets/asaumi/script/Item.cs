@@ -52,13 +52,11 @@ public class Item : MonoBehaviour
                 ikasumi = true;
                 ikaRenderer.enabled = true;
                 Invoke("ikasumiclean", 5.0f);
-                Debug.Log("pppp");
             }
             else
             {
                 if (IsInvoking("ikasumiclean"))
                 {
-                    Debug.Log("ow2");
                     CancelInvoke("ikasumiclean");
                     Invoke("ikasumiclean", 5.0f);
                 }
@@ -66,7 +64,6 @@ public class Item : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("skelton_item"))
         {
-            Debug.Log("shadowverse");
             EnemySend(collision.transform);
         }
     }
