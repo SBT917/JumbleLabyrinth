@@ -15,6 +15,7 @@ public class CoinCounterUI : MonoBehaviour
     void Awake()
     {
         coinCollecter.onCollectCoin += UpdateCount;
+        coinCollecter.onLoseCoin += UpdateCount;
         UpdateCount(0);
     }
 

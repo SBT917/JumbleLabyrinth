@@ -7,8 +7,15 @@ public class CoinCollecter : MonoBehaviour, ICoinCollecter
 {
 
     private int coinCount; //コインの枚数
+    private IInvisiblable invisiblable; 
+
     public Action<int> onCollectCoin; //コインを取得したときに発行されるイベント
     public Action<int> onLoseCoin; //コインを落としたときに発行されるイベント
+
+    private void Awake()
+    {
+        TryGetComponent(out invisiblable);
+    }
 
     public int GetCoinCount()
     {
@@ -19,12 +26,15 @@ public class CoinCollecter : MonoBehaviour, ICoinCollecter
     {
         coinCount += count;
         onCollectCoin?.Invoke(coinCount);
+        Debug.Log(coinCount);
     }
 
     public void LoseCoin(int count)
     {
+        if (coinCount <= 0) return;
+
         coinCount -= count;
-        if(coinCount < 0) { coinCount = 0; return; }
         onLoseCoin?.Invoke(coinCount);
+        Debug.Log(coinCount);
     }
 }

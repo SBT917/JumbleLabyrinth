@@ -29,8 +29,6 @@ public class Stan : MonoBehaviour, IStanable
     
     public void StartStan(float time)
     {
-        if (invisiblable.IsInvisible) return;
-
         isStan = true;
         count = time;
         if (moveable != null) moveable.Enable = false;
