@@ -21,7 +21,9 @@ public class EnemySpawnManager : MonoBehaviour
     private GameObject[] players;
 
     [SerializeField]
-    GameObject respawnEffect;
+    private GameObject respawnEffect;
+
+    public GameObject[] sendTrails;
     
     private int playerNum;
     // Start is called before the first frame update
@@ -54,10 +56,10 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
-    public void RespawnEnemy(int enemyID, int nextSpawnMapID, Vector3 currentEnemyPosition)
+    public void RespawnEnemy(int enemyID, int nextSpawnMapID, Vector3 currentEnemyPosition,GameObject SendTrail)
     {
         var spawnPosition = WalkableTilesManager.instance.GetRandomPointNearPlayer(nextSpawnMapID, players[nextSpawnMapID].transform.position, 5, 2);
-        var effect = Instantiate(respawnEffect, currentEnemyPosition, Quaternion.identity);
+        var effect = Instantiate(SendTrail, currentEnemyPosition, Quaternion.identity);
         effect.GetComponent<SendEffectMove>().StartMoving(spawnPosition.Value);
 
         StartCoroutine(DelaySpawnEnemy(enemyID, nextSpawnMapID, spawnPosition.Value));

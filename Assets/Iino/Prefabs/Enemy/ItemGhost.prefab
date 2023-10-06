@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5892384179031405436}
   - component: {fileID: 2945656232791915307}
   - component: {fileID: 3685603492525115337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ItemGhost
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -210,8 +210,10 @@ MonoBehaviour:
   EnemySpawnAnim: {fileID: 214456637287991828, guid: 020b59ec2afe2a54cba7805fe5e4e06b, type: 3}
   EnemyDestroyAnim: {fileID: 2065158448107060766, guid: ba3a72bc9bb4bf84e838aaf1bbbba7ce, type: 3}
   originalEnemyPrefab: {fileID: 0}
-  dropRate: 0
+  itemDropRate: 0
+  coinDropRate: 0
   DropItems: []
+  coin: {fileID: 0}
   DisappearTime: 10
 --- !u!58 &2945656232791915307
 CircleCollider2D:

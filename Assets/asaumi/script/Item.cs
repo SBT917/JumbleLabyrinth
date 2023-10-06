@@ -81,6 +81,6 @@ public class Item : MonoBehaviour
     }
     private void EnemySend(Transform itemPos)
     {
-        EnemySpawnManager.instance.RespawnEnemy(SendEnemyID, SendPlayerID, transform.position);
+        EnemySpawnManager.instance.RespawnEnemy(SendEnemyID, SendPlayerID, transform.position, EnemySpawnManager.instance.sendTrails[1]);
     }
 }
