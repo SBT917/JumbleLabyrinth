@@ -145,7 +145,7 @@ public abstract class Enemy : MonoBehaviour
 
         //// ƒvƒŒƒCƒ„[ID‚ğØ‚è‘Ö‚¦‚é
         playerID = 1 - playerID;
-        EnemySpawnManager.instance.RespawnEnemy(EnemyID, playerID, transform.position);
+        EnemySpawnManager.instance.RespawnEnemy(EnemyID, playerID, transform.position, EnemySpawnManager.instance.sendTrails[0]);
         Destroy(gameObject);
     }
 

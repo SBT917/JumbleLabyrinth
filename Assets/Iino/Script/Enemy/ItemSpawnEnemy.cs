@@ -24,6 +24,9 @@ public class ItemSpawnEnemy : Enemy
         {
             StartAttacking();
 
+            collision.transform.TryGetComponent(out IInvisiblable invisiblable);
+            if (invisiblable.IsInvisible) return;
+
             if (collision.transform.TryGetComponent(out IKnockBackable knockBackable))
             {
                 Vector2 dir = collision.transform.position - transform.position;
@@ -35,6 +38,10 @@ public class ItemSpawnEnemy : Enemy
                 stanable.StartStan(1f);
             }
 
+            if (collision.transform.TryGetComponent(out ICoinCollecter coinCollecter))
+            {
+                coinCollecter.LoseCoin(3);
+            }
             TeleportAndResetHealth();
         }
     }

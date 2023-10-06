@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3284728142280760296}
   - component: {fileID: 2050636230895498559}
   - component: {fileID: 5694459932500241413}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: umi_ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
