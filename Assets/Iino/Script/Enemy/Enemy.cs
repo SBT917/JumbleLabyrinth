@@ -46,6 +46,9 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     private float coinDropRate;
 
+    [SerializeField]
+    private float enemySendRate;
+
 
     [SerializeField]
     private GameObject[] DropItems;
@@ -145,7 +148,12 @@ public abstract class Enemy : MonoBehaviour
 
         //// ƒvƒŒƒCƒ„[ID‚ğØ‚è‘Ö‚¦‚é
         playerID = 1 - playerID;
-        EnemySpawnManager.instance.RespawnEnemy(EnemyID, playerID, transform.position, EnemySpawnManager.instance.sendTrails[0]);
+        float randomValue = UnityEngine.Random.value;
+        if (randomValue <= enemySendRate)
+        {
+            EnemySpawnManager.instance.RespawnEnemy(EnemyID, playerID, transform.position, EnemySpawnManager.instance.sendTrails[0]);
+        }
+        EnemySpawnManager.instance.RemoveEnemyCount(1);
         Destroy(gameObject);
     }
 

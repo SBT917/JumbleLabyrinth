@@ -92,12 +92,5 @@ public class ItemSpawnEnemy : Enemy
         //”íUŒ‚‚Ìˆ—‚ğ–³‹‚·‚é
     }
 
-    protected override void TeleportAndResetHealth()
-    {
-        //‚±‚Ì“G‚Í“|‚³‚ê‚½A‘Šè‚É‘—‚ç‚¸Á–Å‚·‚é
-        CreateEnemyDestroyAnimation();
-        Destroy(gameObject);
-
-    }
 
 }

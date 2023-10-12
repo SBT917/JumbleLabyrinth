@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemySpawnManager : MonoBehaviour
 {
@@ -23,9 +24,15 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject respawnEffect;
 
+    [SerializeField]
+    TextMeshProUGUI enemyCountText;
+
     public GameObject[] sendTrails;
     
     private int playerNum;
+
+    public int EnemyCount { get; private set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +40,13 @@ public class EnemySpawnManager : MonoBehaviour
         GenerateFirstEnemy();
     }
 
+    private void Update()
+    {
+        //enemyCountText.text = EnemyCount.ToString();
+    }
 
-    private void GenerateFirstEnemy()
+
+    public void GenerateFirstEnemy()
     {
         for (int i = 0; i < playerNum; ++i)
         {
@@ -48,7 +60,7 @@ public class EnemySpawnManager : MonoBehaviour
                         Debug.LogError($"No free tiles available for player {i}.");
                         break;  // 空きタイルが見つからなかった場合、プレイヤーを変える
                     }
-
+                    AddEnemyCount(1);
                     var enemy = Instantiate(enemies[j], spawnPosition.Value, Quaternion.identity, transform);
                     enemy.GetComponent<Enemy>().playerID = i;
                 }
@@ -62,17 +74,39 @@ public class EnemySpawnManager : MonoBehaviour
         var effect = Instantiate(SendTrail, currentEnemyPosition, Quaternion.identity);
         effect.GetComponent<SendEffectMove>().StartMoving(spawnPosition.Value);
 
-        StartCoroutine(DelaySpawnEnemy(enemyID, nextSpawnMapID, spawnPosition.Value));
+        StartCoroutine(DelaySpawnEnemy(enemyID, nextSpawnMapID, spawnPosition.Value,1f));
     }
 
 
-    public IEnumerator DelaySpawnEnemy(int enemyID, int nextSpawnMapID, Vector3 spawnPosition)
+    public IEnumerator DelaySpawnEnemy(int enemyID, int nextSpawnMapID, Vector3 spawnPosition,float delayTime)
     {
-        // 3秒待機
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(delayTime);
+        AddEnemyCount(1);
         var respawnEnemy = Instantiate(enemies[enemyID], spawnPosition, Quaternion.identity);
         respawnEnemy.GetComponent<Enemy>().playerID = nextSpawnMapID;
     }
 
+    //指定された数ランダムに敵を生成
+    public void RandomSpawnEnemy(int spawnNum,int spawnMapID, GameObject[] enemies)
+    {
+        for(int i = 0; i < spawnNum; i++)
+        {
+            var spawnPosition = WalkableTilesManager.instance.GetRandomPoint(spawnMapID);
+            AddEnemyCount(spawnNum);
+            var respawnEnemy = Instantiate(enemies[Random.Range(0,enemies.Length)], spawnPosition.Value, Quaternion.identity);
+            respawnEnemy.GetComponent<Enemy>().playerID = spawnMapID;
+        }
 
+    }
+
+
+    public void AddEnemyCount(int amount)
+    {
+        EnemyCount += amount;
+    }
+
+    public void RemoveEnemyCount(int amount)
+    {
+        EnemyCount -= amount;
+    }
 }

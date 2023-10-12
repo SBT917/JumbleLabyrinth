@@ -315,9 +315,10 @@ public class RangedAttackingState : AttackingState
     UnityEngine.Transform target;
     public Vector2 direction;
 
-    public RangedAttackingState(GameObject enemy, IEnemyState previousState, float attackDuration, GameObject projectilePrefab, Vector2 direction)
+    public RangedAttackingState(GameObject enemy, IEnemyState previousState, float attackDuration, GameObject projectilePrefab, Vector2 direction,string audioName)
                 : base(enemy, previousState, attackDuration)
     {
+        AudioManager.instance.PlaySE(audioName);
         this.enemy = enemy;
         this.previousState = previousState;
         this.attackDuration = attackDuration;
