@@ -11,6 +11,9 @@ public class RangedEnemy : Enemy
     [SerializeField] 
     private GameObject projectilePrefab;
 
+    [SerializeField]
+    private string attackAudioName;
+
     private RangedEnemyChasingState chasingState;
 
     protected override void Initialize()
@@ -52,7 +55,7 @@ public class RangedEnemy : Enemy
 
     protected override void StartAttacking()
     {
-        ChangeState(new RangedAttackingState(gameObject, currentState, 1.0f, projectilePrefab, chasingState.direction));
+        ChangeState(new RangedAttackingState(gameObject, currentState, 1.0f, projectilePrefab, chasingState.direction,attackAudioName));
     }
 
 }

@@ -274,6 +274,7 @@ MonoBehaviour:
   originalEnemyPrefab: {fileID: 7063069362509772957}
   itemDropRate: 0.5
   coinDropRate: 0.5
+  enemySendRate: 0.5
   DropItems:
   - {fileID: 481002988032137448, guid: 33526036ea1a4204f9520d5ab462f14d, type: 3}
   - {fileID: 6552638594837958890, guid: 3aafaac9044838f4a8ce569431918250, type: 3}

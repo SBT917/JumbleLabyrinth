@@ -79,7 +79,7 @@ public class WalkableTilesManager : MonoBehaviour
         Vector3Int localPosition = freeTiles[playerIndex][randomIndex];
 
         // Cell の中心にオフセットを追加
-        Vector3 centerOffset = new Vector3(0f, 0f, 0);
+        Vector3 centerOffset = new Vector3(0.5f, 0.5f, 0);
         Vector3 worldPosition = tilemaps[playerIndex].CellToWorld(localPosition) + centerOffset;
 
         return worldPosition;

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ProjectileExplosion : MonoBehaviour
 {
+    [SerializeField]
+    private string AudioName;
     // Start is called before the first frame update
     void Start()
     {
-
+        AudioManager.instance.PlaySE("Ignition");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
