@@ -2804,7 +2804,7 @@ MonoBehaviour:
   bgmDatas:
   - name: MainBgm
     clip: {fileID: 8300000, guid: ad47b3a285bd5be498a43f2b20f1fe08, type: 3}
-    volume: 0
+    volume: 0.5
   seDatas:
   - name: Attack
     clip: {fileID: 8300000, guid: 06a4b6ca430fad1448c404bc7a18fe86, type: 3}

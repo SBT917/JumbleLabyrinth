@@ -9,7 +9,7 @@ public class ProjectileExplosion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.instance.PlaySE("Ignition");
+        AudioManager.instance.PlaySE(AudioName);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,6 +25,12 @@ public class ProjectileExplosion : MonoBehaviour
             if (collision.transform.TryGetComponent(out IStanable stanable))
             {
                 stanable.StartStan(1f);
+            }
+
+            //コイン失いまくり
+            if (collision.transform.TryGetComponent(out ICoinCollecter coinCollecter))
+            {
+                coinCollecter.LoseCoin(1);
             }
 
             //コライダーをオフに
