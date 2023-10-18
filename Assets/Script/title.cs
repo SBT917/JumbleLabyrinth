@@ -10,6 +10,7 @@ public class title : MonoBehaviour
     private float timer;
     private bool isImageActive;
 
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
