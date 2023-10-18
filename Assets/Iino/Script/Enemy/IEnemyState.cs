@@ -315,26 +315,33 @@ public class RangedAttackingState : AttackingState
     UnityEngine.Transform target;
     public Vector2 direction;
 
+    string attackAudio;
+
     public RangedAttackingState(GameObject enemy, IEnemyState previousState, float attackDuration, GameObject projectilePrefab, Vector2 direction,string audioName)
                 : base(enemy, previousState, attackDuration)
     {
-        AudioManager.instance.PlaySE(audioName);
         this.enemy = enemy;
         this.previousState = previousState;
         this.attackDuration = attackDuration;
         this.projectilePrefab = projectilePrefab;
         this.direction = direction;
-
+        attackAudio = audioName;
         AfterEffect();
     }
 
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        float offsetDistance = 3.0f;
+        
+        enemy.StartCoroutine(ShootProjectile(enemy));
+    }
+
+    IEnumerator ShootProjectile(Enemy enemy)
+    {
+        yield return new WaitForSeconds(0.5f);
 
         // 発射物の初期位置を割り出す
-        Vector3 spawnPosition = enemy.transform.position + enemy.transform.forward * offsetDistance;
+        Vector3 spawnPosition = enemy.transform.position;
 
         // アニメーターから方向を取得
         Animator animator = enemy.GetComponent<Animator>();
@@ -343,6 +350,7 @@ public class RangedAttackingState : AttackingState
         // 割り出した位置に発射物を生成する
         GameObject projectile = UnityEngine.Object.Instantiate(projectilePrefab, spawnPosition, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
 
+        AudioManager.instance.PlaySE(attackAudio);
         // 発射物の回転を合わせる
         EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
         if (projectileScript != null)
@@ -350,7 +358,6 @@ public class RangedAttackingState : AttackingState
             projectileScript.SetDirection(direction);
         }
     }
-
 }
 
 public class MazeWalkState : IEnemyState
