@@ -22,6 +22,7 @@ public class Coin : MonoBehaviour
     {
         if (collision.TryGetComponent(out ICoinCollecter coinCollecter))
         {
+            AudioManager.instance.PlaySE("Coin");
             coinCollecter.CollectCoin(count);
             Destroy(gameObject);
         }

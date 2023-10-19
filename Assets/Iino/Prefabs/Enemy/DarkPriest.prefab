@@ -194,12 +194,15 @@ MonoBehaviour:
   originalEnemyPrefab: {fileID: 293063253961233138}
   itemDropRate: 0.5
   coinDropRate: 0.5
+  redCoinDropRate: 0.05
   enemySendRate: 0.5
   DropItems:
   - {fileID: 481002988032137448, guid: 33526036ea1a4204f9520d5ab462f14d, type: 3}
   - {fileID: 6552638594837958890, guid: 3aafaac9044838f4a8ce569431918250, type: 3}
   - {fileID: 5962314247345894967, guid: 77d977d29df221045be6498df596f73e, type: 3}
-  coin: {fileID: 5591543603569420924, guid: e371fde8f3aed6d49b072541e552a757, type: 3}
+  coins:
+  - {fileID: 5591543603569420924, guid: e371fde8f3aed6d49b072541e552a757, type: 3}
+  - {fileID: 5465505749410811820, guid: 2e9f31c885bed9c469ba5b0c1b9a743b, type: 3}
   projectilePrefab: {fileID: 9172531868399182999, guid: 5f332650c2bae8c4786c92f783fea57a, type: 3}
   attackAudioName: FireBall
 --- !u!1 &5476359215578748135
