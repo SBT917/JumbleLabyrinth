@@ -2824,6 +2824,18 @@ MonoBehaviour:
   - name: Ignition
     clip: {fileID: 8300000, guid: 8ce1ab9c0f424ae4e8cdaf8ed6c0952d, type: 3}
     volume: 1
+  - name: Coin
+    clip: {fileID: 8300000, guid: 10b3d42a3d61a164fbd4ce126d0797a0, type: 3}
+    volume: 1
+  - name: HasteBoots
+    clip: {fileID: 8300000, guid: 121c19259d587354b96643bc939324be, type: 3}
+    volume: 1
+  - name: Skelton
+    clip: {fileID: 8300000, guid: 8f0064f310e27d94c8c69a71586f399e, type: 3}
+    volume: 1
+  - name: Squid
+    clip: {fileID: 8300000, guid: aef02c4d8a8b18c4092620dd730852f4, type: 3}
+    volume: 1
 --- !u!4 &1960373262
 Transform:
   m_ObjectHideFlags: 0
