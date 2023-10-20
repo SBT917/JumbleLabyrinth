@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ProjectileExplosion : MonoBehaviour
 {
+    [SerializeField]
+    private string AudioName;
     // Start is called before the first frame update
     void Start()
     {
-
+        AudioManager.instance.PlaySE(AudioName);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,6 +25,12 @@ public class ProjectileExplosion : MonoBehaviour
             if (collision.transform.TryGetComponent(out IStanable stanable))
             {
                 stanable.StartStan(1f);
+            }
+
+            //コイン失いまくり
+            if (collision.transform.TryGetComponent(out ICoinCollecter coinCollecter))
+            {
+                coinCollecter.LoseCoin(1);
             }
 
             //コライダーをオフに

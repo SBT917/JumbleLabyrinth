@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5892384179031405436}
   - component: {fileID: 2945656232791915307}
   - component: {fileID: 3685603492525115337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ItemGhost
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 7133948166427245207}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.919949, y: -11.286777, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7315555957947255347}
@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 2037914494, guid: 45f4dbe416e70ca4ea80887ee875c36c, type: 3}
+  m_Sprite: {fileID: 124958045, guid: 22f5d2aeb5ee625429d9d323188e84c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -179,7 +179,7 @@ Animator:
   m_GameObject: {fileID: 7133948166427245207}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eeb17cc9d332d1742bb64ec02bd0bc8e, type: 2}
+  m_Controller: {fileID: 9100000, guid: d2db6343aac3b274090600b2bfbfd9b6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -210,8 +210,11 @@ MonoBehaviour:
   EnemySpawnAnim: {fileID: 214456637287991828, guid: 020b59ec2afe2a54cba7805fe5e4e06b, type: 3}
   EnemyDestroyAnim: {fileID: 2065158448107060766, guid: ba3a72bc9bb4bf84e838aaf1bbbba7ce, type: 3}
   originalEnemyPrefab: {fileID: 0}
-  dropRate: 0
+  itemDropRate: 0
+  coinDropRate: 0
+  enemySendRate: 0
   DropItems: []
+  coin: {fileID: 0}
   DisappearTime: 10
 --- !u!58 &2945656232791915307
 CircleCollider2D:
@@ -247,7 +250,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.007840514, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.35
 --- !u!50 &3685603492525115337
 Rigidbody2D:
   serializedVersion: 4

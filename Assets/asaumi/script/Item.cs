@@ -30,6 +30,7 @@ public class Item : MonoBehaviour
         {
             if (!isDebuffed)
             {
+                AudioManager.instance.PlaySE("HasteBoots");
                 isDebuffed = true;
                 move.moveSpeed *= 1.3f;
                 Invoke("Removebuff", 5.0f);
@@ -49,6 +50,7 @@ public class Item : MonoBehaviour
         {
             if (!ikasumi)
             {
+                AudioManager.instance.PlaySE("Squid");
                 ikasumi = true;
                 ikaRenderer.enabled = true;
                 Invoke("ikasumiclean", 5.0f);
@@ -64,6 +66,7 @@ public class Item : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("skelton_item"))
         {
+            AudioManager.instance.PlaySE("Skelton");
             EnemySend(collision.transform);
         }
     }
@@ -81,6 +84,6 @@ public class Item : MonoBehaviour
     }
     private void EnemySend(Transform itemPos)
     {
-        EnemySpawnManager.instance.RespawnEnemy(SendEnemyID, SendPlayerID, transform.position);
+        EnemySpawnManager.instance.RespawnEnemy(SendEnemyID, SendPlayerID, transform.position, EnemySpawnManager.instance.sendTrails[1]);
     }
 }

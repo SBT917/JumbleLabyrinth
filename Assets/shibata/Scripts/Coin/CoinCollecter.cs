@@ -31,9 +31,8 @@ public class CoinCollecter : MonoBehaviour, ICoinCollecter
 
     public void LoseCoin(int count)
     {
-        if (coinCount <= 0) return;
-
         coinCount -= count;
+        if (coinCount < 0) { coinCount = 0; return; }
         onLoseCoin?.Invoke(coinCount);
         Debug.Log(coinCount);
     }
