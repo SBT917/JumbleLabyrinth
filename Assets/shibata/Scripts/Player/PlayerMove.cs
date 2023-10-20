@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour, IMoveable
 
     bool enable = true;
     Rigidbody2D rigid;
-   public float moveSpeed; //移動速度
+    public float moveSpeed; //移動速度
     Vector3 moveVec; //移動ベクトル
     public bool Enable
     {
