@@ -8,12 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/tiele.unity
     guid: 384f6a08027c63d46b494f5c82977489
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 1db136b65fbbe4d48a6c3abdad3403a0
   - enabled: 1
     path: Assets/Scenes/result.unity
     guid: fab8c2f704243a5409e704f450264a88
