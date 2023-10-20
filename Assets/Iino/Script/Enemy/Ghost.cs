@@ -78,7 +78,7 @@ public class Ghost : Enemy
 
     protected override void StartAttacking()
     {
-        ChangeState(new MeleeAttackingState(gameObject, currentState, 5.0f));
+        ChangeState(new MeleeAttackingState(gameObject, currentState, 2.0f));
     }
 
 }

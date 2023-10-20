@@ -32,6 +32,11 @@ public class EnemyProjectile : MonoBehaviour
             collision.transform.TryGetComponent(out IInvisiblable invisiblable);
             if (invisiblable.IsInvisible)
             {
+                if (explosion != null)
+                {
+                    //îöî≠Çê∂ê¨Ç∑ÇÈ
+                    GameObject Explosion = Instantiate(explosion, transform.position, Quaternion.identity);
+                }
                 Destroy(gameObject); 
                 return;
             }

@@ -16,6 +16,12 @@ public class ProjectileExplosion : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            collision.transform.TryGetComponent(out IInvisiblable invisiblable);
+            if (invisiblable.IsInvisible)
+            {
+                return;
+            }
+
             if (collision.transform.TryGetComponent(out IKnockBackable knockBackable))
             {
                 Vector2 dir = collision.transform.position - transform.position;
@@ -27,7 +33,6 @@ public class ProjectileExplosion : MonoBehaviour
                 stanable.StartStan(1f);
             }
 
-            //ƒRƒCƒ“Ž¸‚¢‚Ü‚­‚è
             if (collision.transform.TryGetComponent(out ICoinCollecter coinCollecter))
             {
                 coinCollecter.LoseCoin(1);
