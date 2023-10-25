@@ -37,7 +37,7 @@ public class EnemySpawnManager : MonoBehaviour
     void Start()
     {
         playerNum = players.Length;
-        GenerateFirstEnemy();
+        Invoke("GenerateFirstEnemy",3f);
     }
 
     private void Update()
